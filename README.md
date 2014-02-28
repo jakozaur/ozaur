@@ -29,4 +29,6 @@ python views.py
 # Useful tools
 http://postgresapp.com/
 
+Authors: Jacek Migdal, Gosia Migdal
+
 
