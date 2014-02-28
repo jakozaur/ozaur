@@ -35,3 +35,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Vim
+.*.swp
+
+# Project config files
+config.py
