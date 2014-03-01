@@ -1,6 +1,61 @@
 <html>
+  <head>
+    <title>Sign up to Ozaur</title>
+  </head>
   <body>
     <h1>The rules</h1>
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+        api_key: 75l6c5puk0y9n2
+        onLoad: LinkedIn.onLoad
+    </script>
+    <script type="text/javascript">
+      var LinkedIn = {
+        onLoad: function() {
+          IN.Event.on(IN, "auth", LinkedIn.onAuth);
+        },
+
+        onAuth: function() {
+          IN.API.Profile("me")
+            .fields("first-name", "last-name",
+                "headline",
+                "location",
+                "industry", "num-connections",
+                "summary", "specialties",
+                "positions",
+                "picture-url",
+                "public-profile-url",
+                "email-address",
+                "associations",
+                "interests",
+                "publications",
+                "patents",
+                "languages",
+                "skills",
+                "certifications",
+                "educations",
+                "courses",
+                "volunteer",
+                "num-recommenders",
+                "honors-awards")
+            .result(LinkedIn.onMe);
+        },
+
+        onMe: function(profiles) {
+          var member = profiles.values[0];
+          console.log("Profiles");
+          console.log(profiles);
+          console.log("Member");
+          console.log(member);
+        }
+
+
+      };
+
+    </script>
+    <script type="in/Login">
+      Hello, <?js= firstName ?> <?js= lastName ?>.
+    </script>
+
     <a href="/">Connect with LinkedIn</a>
   </body>
 </html>
