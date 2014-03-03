@@ -4,6 +4,7 @@
   </head>
   <body>
     <h1>The rules</h1>
+    <p>You give us right to copy your profile data and store it.</p>
     <script type="text/javascript" src="http://platform.linkedin.com/in.js">
         api_key: 75l6c5puk0y9n2
         onLoad: LinkedIn.onLoad
@@ -16,7 +17,8 @@
 
         onAuth: function() {
           IN.API.Profile("me")
-            .fields("first-name", "last-name",
+            .fields("id",
+                "first-name", "last-name",
                 "headline",
                 "location",
                 "industry", "num-connections",
