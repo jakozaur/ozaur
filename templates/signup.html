@@ -1,6 +1,8 @@
 <html>
   <head>
     <title>Sign up to Ozaur</title>
+    <script type="text/javascript" src="static/js/jquery-2.1.0.min.js">
+    </script>
   </head>
   <body>
     <h1>The rules</h1>
@@ -14,6 +16,8 @@
         onLoad: function() {
           IN.Event.on(IN, "auth", LinkedIn.onAuth);
         },
+
+                // IN.ENV.auth.oauth_token
 
         onAuth: function() {
           IN.API.Profile("me")
@@ -40,6 +44,10 @@
                 "num-recommenders",
                 "honors-awards")
             .result(LinkedIn.onMe);
+
+          $("#signup_form input").val(IN.ENV.auth.oauth_token);
+          $("#signup_form").submit();
+
         },
 
         onMe: function(profiles) {
@@ -54,11 +62,18 @@
       };
 
     </script>
+
     <script type="in/Login">
       Hello, <?js= firstName ?> <?js= lastName ?>.
     </script>
 
     <a href="/">Connect with LinkedIn</a>
+    <form method="post" action="{{ url_for('create_profile') }}" id="signup_form">
+      <input type="hidden" name="linkedin_oauth_token" value="(none)">
+    </form>
+
+
+
   </body>
 </html>
 
