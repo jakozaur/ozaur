@@ -17,62 +17,23 @@
           IN.Event.on(IN, "auth", LinkedIn.onAuth);
         },
 
-                // IN.ENV.auth.oauth_token
-
         onAuth: function() {
-          IN.API.Profile("me")
-            .fields("id",
-                "first-name", "last-name",
-                "headline",
-                "location",
-                "industry", "num-connections",
-                "summary", "specialties",
-                "positions",
-                "picture-url",
-                "public-profile-url",
-                "email-address",
-                "associations",
-                "interests",
-                "publications",
-                "patents",
-                "languages",
-                "skills",
-                "certifications",
-                "educations",
-                "courses",
-                "volunteer",
-                "num-recommenders",
-                "honors-awards")
-            .result(LinkedIn.onMe);
-
+          // Pass OAuth token to backend, which will fetch profile and create an account.
           $("#signup_form input").val(IN.ENV.auth.oauth_token);
           $("#signup_form").submit();
-
-        },
-
-        onMe: function(profiles) {
-          var member = profiles.values[0];
-          console.log("Profiles");
-          console.log(profiles);
-          console.log("Member");
-          console.log(member);
         }
-
-
       };
 
     </script>
 
     <script type="in/Login">
-      Hello, <?js= firstName ?> <?js= lastName ?>.
+      Hello!
     </script>
 
     <a href="/">Connect with LinkedIn</a>
-    <form method="post" action="{{ url_for('create_profile') }}" id="signup_form">
+    <form method="post" action="{{ url_for('create_account') }}" id="signup_form">
       <input type="hidden" name="linkedin_oauth_token" value="(none)">
     </form>
-
-
 
   </body>
 </html>
