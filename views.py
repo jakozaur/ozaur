@@ -1,4 +1,5 @@
 from flask import render_template, request
+from sqlalchemy.exc import IntegrityError
 import json
 import requests
 
@@ -21,10 +22,7 @@ def create_account():
       headers={"oauth_token": linkedin_oauth_token,
         "x-li-format": "json"})
 
-  print "JM", r.json()["values"]
-
   user_json = r.json()["values"][0]
-
 
   user = User(email = user_json["emailAddress"],
       display_name = "%s %s" % (user_json["firstName"], user_json["lastName"]),
@@ -43,10 +41,15 @@ def create_account():
   db.session.add(user)
   db.session.add(profile)
 
-  db.session.commit()
-  #db.session.refresh()
+  try:
+    db.session.commit()
+  except IntegrityError, e:
+    db.session.rollback()
+    user = User.query.filter(User.email == user_json["emailAddress"]).first()
+    # TODO: Change when we will have more profiles per user
+    profile = user.profiles[0]
 
-  return "Response " + str(r.json())
+  return render_template("profile.html", user = user, profile = profile)
 
 if __name__ == "__main__":
     app.run(debug=config.APP_DEBUG)
