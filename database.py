@@ -2,13 +2,17 @@ from sqlalchemy import create_engine, Column, Integer, String, Index, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.login import UserMixin
+from flask.ext.sqlalchemy import SQLAlchemy
 
+from main import app
 import config
 
-engine = create_engine(config.DB_URL, encoding = "utf-8", echo = config.DB_DEBUG_ECHO)
-Base = declarative_base()
+app.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URL
+app.config["SQLALCHEMY_ECHO"] = config.DB_DEBUG_ECHO
 
-class User(Base, UserMixin):
+db = SQLAlchemy(app)
+
+class User(db.Model, UserMixin):
   __tablename__ = "user"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
@@ -22,7 +26,7 @@ class User(Base, UserMixin):
 
   __table_args__ = (Index("user_email_idx", "email", unique=True),)
 
-class Profile(Base):
+class Profile(db.Model):
   __tablename__ = "profile"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
@@ -34,10 +38,10 @@ class Profile(Base):
   user = relationship("User", backref="profiles")
 
 def create_schema():
-  Base.metadata.create_all(engine) 
+  db.create_all()
 
 def delete_schema():
-  Base.metadata.drop_all(engine) 
+  db.drop_all()
 
 if __name__ == '__main__':
   from sys import argv

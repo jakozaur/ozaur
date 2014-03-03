@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request
+from flask import render_template, request
+import json
 import requests
-app = Flask(__name__)
+
+import config
+from database import db, User, Profile
+from main import app
 
 @app.route("/")
 def main_page():
@@ -17,8 +21,33 @@ def create_account():
       headers={"oauth_token": linkedin_oauth_token,
         "x-li-format": "json"})
 
+  print "JM", r.json()["values"]
+
+  user_json = r.json()["values"][0]
+
+
+  user = User(email = user_json["emailAddress"],
+      display_name = "%s %s" % (user_json["firstName"], user_json["lastName"]),
+      headline = user_json["headline"],
+      industry = user_json["industry"],
+      location = user_json["location"]["name"],
+      interested_in = "",
+      photo_url = user_json["pictureUrl"]
+      )
+
+  profile = Profile(external_key = user_json["id"],
+      data_json = json.dumps(user_json))
+
+  user.profiles.append(profile)
+
+  db.session.add(user)
+  db.session.add(profile)
+
+  db.session.commit()
+  #db.session.refresh()
+
   return "Response " + str(r.json())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=config.APP_DEBUG)
 
