@@ -1,6 +1,15 @@
 <html>
   <body>
     <p>{{ user.display_name }}</p>
-    <p>{{ profile.data_json }}</p>
+    <p>{{ user.headline }}</p>
+    <p>{{ user.location }}</p>
+    <p>{{ user.industry }}</p>
+
+    { % for skill in user.skills % }
+        <p>{{ skill}}</p>
+    { % endfor % }
+
+
+     <p>{{ profile.data_json }}</p>
   </body>
 </html>
