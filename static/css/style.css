@@ -8,10 +8,6 @@ html, body {
 }
 
 /* Upper navbar styling */
-nav {
-    height: 11%;
-}
-
 nav a {
     color: #5e5e5e;
     font-family: 'Gafata', sans-serif;
