@@ -49,7 +49,9 @@ def create_account():
     # TODO: Change when we will have more profiles per user
     profile = user.profiles[0]
 
-  return render_template("profile.html", user = user, profile = profile)
+  linkedin = json.loads(profile.data_json)
+
+  return render_template("profile.html", user = user, linkedin = linkedin)
 
 if __name__ == "__main__":
     app.run(debug=config.APP_DEBUG)

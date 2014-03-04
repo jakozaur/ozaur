@@ -5,11 +5,17 @@
     <p>{{ user.location }}</p>
     <p>{{ user.industry }}</p>
 
-    { % for skill in user.skills % }
-        <p>{{ skill}}</p>
-    { % endfor % }
+    <h2>Skills</h2>
+    {% for skill in linkedin["skills"]["values"] %}
+        <p>{{ skill["skill"]["name"] }}</p>
+    {% endfor %}
+
+    <h2>Jobs</h2>
+    {% for position in linkedin["positions"]["values"] %}
+      <p>{{ position }}</p>
+    {% endfor %}
 
 
-     <p>{{ profile.data_json }}</p>
+     <p>{{ linkedin }}</p>
   </body>
 </html>
