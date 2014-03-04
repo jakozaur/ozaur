@@ -1,19 +1,60 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>Ozaur</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" charset="utf-8">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/js/application.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>    </head>
+        <link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
   <body>
-    <h1>Ozaur - the attention marketplace</h1>
-    <!--<p>The attention marketplace. Buy and sell using bitcoins.</p>-->
-
-    <h2>Get email response for bitcoin.</h2>
-    <p>Technically you can send message to anyone on the internet... but will it be read and responded?</p>
-    <p>Imagine what you could achieve if you can grab attention anyone in the world?</p>
-    <p>Interested? Just bid on any profile. Each week the best offer got a priviliage to send a priority message with promised quality reponse.</p>
-
-    <p>Don't spam. Respect their time. Tip them for their valuable time.</p>
-
-    <h2>Sell 5 minute of your attention to one who deserves it the most.</h2>
-    
-
-    <a href="{{ url_for('signup')  }}">Join the revolution</a>
+        <nav class="navbar" role="navigation">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#upper-navbar">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand">Ozaur</a>
+            <div class="collapse navbar-collapse" id="upper-navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="team.html">Team</a></li>
+                </ul>
+            <div>
+        </nav>
+        <div class="row header">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-7 col-lg-offset-1">
+                <h1>Ozaur, the attention marketplace.</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <p>Ozaur is a place when you can sell and buy attention using bitcoins.</p><p>Interested?</p> <p>Just bid on any profile. Each week the best offer got a priviliage to send a priority message with promised quality reponse. <a href="#">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-5">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4 col-sm-1 col-sm-offset-4 col-md-1 col-md-offset-4 col-lg-1 col-lg-offset-4">
+                <a href="{{ url_for('signup') }}" class="btn btn-default btn-lg active action-button" role="button">Join the revolution</a>
+            </div>
+        </div>
   </body>
 </html>
 
