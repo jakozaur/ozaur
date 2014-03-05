@@ -17,7 +17,7 @@ nav a {
     color: #5e5e5e;
     font-family: 'Gafata', sans-serif;
     margin-top: 11px;
-    margin-right: 20px;
+    margin-right: 50px;
 }
 
 
@@ -61,6 +61,17 @@ h1 {
     font-family: 'Raleway', sans-serif;
 }
 
+h2 {
+    font-size: 2.5em;
+    font-family: 'Raleway', sans-serif;
+}
+
+.how-works h2 {
+    font-weight: bold;
+    line-height: 40px;
+    margin-bottom: 30px;
+}
+
 .header {
     margin-top: 50px;
     margin-bottom: 30px;
@@ -71,8 +82,8 @@ h1 {
     color: black;
     background-color: white!important;
     font-family: 'Raleway', sans-serif;
-    margin-top: 60px;
-    margin-bottom: 40px;
+    margin-top: 30px;
+    margin-bottom: 60px;
 }
 
 .action-button:hover {
@@ -87,11 +98,12 @@ p {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     text-align: justify;
+    line-height: 30px;
 }
 
-
-
-
-
+.how-works-step {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
 
   
