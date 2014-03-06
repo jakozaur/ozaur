@@ -101,9 +101,27 @@ p {
     line-height: 30px;
 }
 
+li {
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    text-align: justify;
+    line-height: 30px;
+}
+
 .how-works-step {
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
-  
+.rules, .agree {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.terms {
+    margin-bottom: 20px;
+}
+
+
+
