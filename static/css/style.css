@@ -110,8 +110,8 @@ li {
 }
 
 .how-works-step {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .rules, .agree {
@@ -127,3 +127,43 @@ li {
 .abc {
     background-color: #AFBABA;
 }
+
+
+.main {
+    background-color: #BFB8BB;
+}
+
+img.icon-small {
+    padding-top: 50px;
+}
+
+img.icon-medium {
+    padding-top: 100px;
+}
+
+img.icon-large {
+    padding-top: 120px;
+}
+
+@media (max-width: 991px) {
+    img.icon-small {
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 991px) {
+    img.icon-medium {
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 991px) {
+    img.icon-large {
+        padding-top: 30px;
+    }
+}
+
+
+
+
+

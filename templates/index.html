@@ -15,6 +15,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
   <body>
+    <div class="main">
         <nav class="navbar" role="navigation">
             <a href="index.html" class="navbar-brand">Ozaur</a>
             <div id="upper-navbar">
@@ -23,9 +24,6 @@
                 </ul>
             <div>
         </nav>
-
-        <div class="abc">
-            
         <div class="row header">
             <div class="col-xs-10 col-xs-offset-1 col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-7 col-lg-offset-1">
                 <h1>The attention marketplace</h1>
@@ -39,7 +37,7 @@
                          <p>We make sure, that it will.</p>
                          <p>Just sign up with your LinkedIn and start bidding on profiles, which looks most interesting for you.</p>
                          <p>Each week the best offer got a priviliage to send a priority message with promised quality reponse.</p>
-                         <p>Pay easily using bitcoins.</p>
+                         <p>Pay easily using bitcoins.</p> <p>The others can bid on you. Earn bitcoins while selling your attention to them.</p>
                     </div>
                 </div>
             </div>
@@ -56,21 +54,16 @@
                 <a href="{{ url_for('signup') }}" class="btn btn-default btn-lg active action-button" role="button">Join the revolution</a>
             </div>
         </div>
-
-</div>
-
-
-
-
+    </div>
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4 how-works">
                 <h2>HOW DOES IT WORK?</h2>
             </div>
         </div>
         <div class="row how-works-step">
-            <div class="col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-2">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
                         <h2>1. Sign up with LinkedIn</h2>
                         <p>Sign up to Ozaur using your LinkedIn account. Your profile is now automaticcaly created, using your LinkedIn data. We do not display any of your contact information. If you want, you can additionally write short paragraph about yourself.</p>
                         <p>We will send you email as a confirmation. Please, respond to it with simpy one world. It will make use activated user.</p>
@@ -78,63 +71,83 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                ICON GOES HERE
+            <div class="col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-4 col-sm-offset-5 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
+                        <img class="icon-large" src="/static/images/LinkedIn.png">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row how-works-step">
-            <div class="col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-2">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
                         <h2>2. Buy bitcoins</h2>
                         <p>In order to start bidding another people attention, you need to have bitcoins. You can easily buy them via your Ozaur account. We have integrated <a href="https://coinbase.com/" target="_blank">Coinbase</a> wallet for you. It allows to safely buy, use and accept bitcoin currency.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                ICON GOES HERE
+            <div class="col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-4 col-sm-offset-5 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
+                        <img class="icon-small" src="/static/images/Bitcoin.png">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row how-works-step">
-            <div class="col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-2">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
                         <h2>3. Bidding attention</h2>
                         <p>On everyone's profiles you will see, how much the others wants to pay for certain user attention. Now it's time to decide, how much it is worth for you. Simply click and share amount of bitcoin, which you want to pay for messaging this person. This amount will be now "freezed" until to end of bidding. It means, that you will not be able to use it. You can always come back and wager more. </p>
                         <p>Bidding is solved every week. If amount which you are willing to pay is the highest, you win. Now you can send message to this person. We will pass it via our system, so you will never see each other emails. No spam for the future:)</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                ICON GOES HERE
+            <div class="col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-4 col-sm-offset-5 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
+                        <img class="icon-large" src="/static/images/Bid.png">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row how-works-step">
-            <div class="col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-2">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
                         <h2>4. Paying for the attention </h2>
                         <p>Since you win auction, you have 48 hours to formulate an email. Try to write shortly and precisely. Person, to whom it will be send also have 48 hours for response.</p>
                         <p>If everything is fine with a message, bitcoins are charged from you account. But if there is any problem with response (abusement, no response, empty response) we will not charge you. Person will not receive your money. Amount which you wagered will be "unfreezed".</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                ICON GOES HERE
-            </div>
-        </div>
-        <div class="row how-works-step">
-            <div class="col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <h2>5. Sell your attention</h2>
-                        <p>We are marketplace, so you can also see your attention. You just need to wait, until somebody start bidding on your profile. Every week auction is solved. You have 48 hours to respond for email fro this, who won. Do your best and bitcoins will land on your account:)</p>
-                        <p>Wants to increase your chances of be paid for your attention? It might be a good time to polish your LinkedIn profile </p>
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-4 col-sm-offset-5 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
+                        <img class="icon-medium" src="/static/images/Email.png">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                ICON GOES HERE
+        </div>
+        <div class="row how-works-step">
+            <div class="col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
+                        <h2>5. Sell your attention</h2>
+                        <p>We are marketplace, so you can also see your attention. You just need to wait, until somebody start bidding on your profile. Every week auction is solved. You have 48 hours to respond for email fro this, who won. Do your best and bitcoins will land on your account:)</p>
+                        <p>Wants to increase your chances of being paid for your attention? It might be a good time to polish your LinkedIn profile </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-4 col-sm-offset-5 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
+                        <img class="icon-medium" src="/static/images/Sell.png">
+                    </div>
+                </div>
             </div>
         </div>
   </body>
