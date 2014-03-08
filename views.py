@@ -15,6 +15,11 @@ def main_page():
 def signup():
     return render_template("signup.html")
 
+@app.route("/team")
+def team():
+    return render_template("team.html")
+
+
 @app.route("/create_account", methods=["POST"])
 def create_account():
   linkedin_oauth_token = request.form["linkedin_oauth_token"]

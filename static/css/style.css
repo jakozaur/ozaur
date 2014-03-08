@@ -93,7 +93,7 @@ h2 {
     font-family: 'Raleway', sans-serif;
 }
 
-p {
+p, label, #sign-up {
     font-size: 18px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -114,7 +114,7 @@ li {
     margin-bottom: 50px;
 }
 
-.rules, .agree {
+.rules `{
     margin-top: 30px;
     margin-bottom: 20px;
 }
@@ -163,7 +163,15 @@ img.icon-large {
     }
 }
 
+img.signup {
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
 
+label {
+    margin-left: 10px;
+}
 
-
-
+#sign-up {
+    margin-right: 30px;
+}
