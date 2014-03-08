@@ -8,6 +8,7 @@ ozaur
 1. virtualenv env
 2. pip install -r requirements.txt # You may need to redo after requirements.txt get updated
 3. Append config to env/bin/activate:
+```
     # Ozaur app settings
     export OZAUR_DB_URL="postgresql://jakozaur@localhost/ozaur"
     export OZAUR_DB_DEBUG="TRUE"
@@ -15,6 +16,8 @@ ozaur
     
     export OZAUR_MAILGUN_API_KEY="[[SOME KEY]]"
     export OZAUR_MAILGUN_DOMAIN="sandbox35839.mailgun.org"
+```
+
 4. Install postgresapp
 5. Launch postgresapp (Postgres93)
 6. Open psql and type: CREATE DATABASE ozaur;
