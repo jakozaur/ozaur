@@ -118,6 +118,10 @@ h3 {
     font-weight: bold;
 }
 
+h4 {
+    line-height: 30px;
+}
+
 
 .how-works-step {
     margin-top: 50px;
@@ -227,4 +231,15 @@ button.save:hover {
     width: 330px;
    } 
 }
+
+.job, .school, .association {
+    margin-top: 40px;
+}
+
+
+
+
+
+
+
 

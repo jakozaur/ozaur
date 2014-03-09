@@ -68,19 +68,21 @@
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
             <h3>Jobs</h3>
-            {% for position in linkedin["positions"]["values"] %}
-              <h4>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h4>
-              <h4> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
-                {% if "endDate" in position %}
-                    {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
-                {% else %}
-                    current
-                {% endif %} </h4>
-              <p class="about">{% for line in position["summary"].splitlines() %}
-                    {{line}} <br>
+                {% for position in linkedin["positions"]["values"] %}
+                    <div class="job">
+                        <h4>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h4>
+                        <h4> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
+                            {% if "endDate" in position %}
+                                {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
+                            {% else %}
+                                current
+                            {% endif %} </h4>
+                        <p class="about">{% for line in position["summary"].splitlines() %}
+                                {{line}} <br>
+                            {% endfor %}
+                        </p>
+                    </div>
                 {% endfor %}
-              </p>
-            {% endfor %}
         </div>
     </div>
 
@@ -97,11 +99,13 @@
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
             <h3>Education</h3>
             {% for education in linkedin["educations"]["values"] %}
-                <h4>{{ education["schoolName"] }}</h4>
-                <p class="about">{{ education["startDate"]["year"] }} - {{ education["endDate"]["year"] }}</p>
-                <p class="about">{{ education["fieldOfStudy"] }}</p>
-                <p class="about">{{ education["activities"] }}</p>
-                <p class="about">{{ education["notes"] }}</p>
+                <div class="school">
+                    <h4>{{ education["schoolName"] }}</h4>
+                    <p class="about">{{ education["startDate"]["year"] }} - {{ education["endDate"]["year"] }}</p>
+                    <p class="about">{{ education["fieldOfStudy"] }}</p>
+                    <p class="about">{{ education["activities"] }}</p>
+                    <p class="about">{{ education["notes"] }}</p>
+                </div>
             {% endfor %}
         </div>
     <div>
@@ -116,7 +120,9 @@
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
             <h3>Associations</h3>
-            <p class="about">{{ linkedin["associations"] }}</p>
+            <div class="association">
+                <p class="about">{{ linkedin["associations"] }}</p>
+            </div>
         </div>
     </div>
   </body>
