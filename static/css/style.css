@@ -101,7 +101,7 @@ p, label, #sign-up {
     line-height: 30px;
 }
 
-li {
+li, .about {
     font-size: 15px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -168,6 +168,11 @@ img.signup {
     margin-bottom: 70px;
 }
 
+img.portrait {
+    border-radius: 70px;
+    margin: 30px;
+}
+
 label {
     margin-left: 10px;
 }
@@ -175,3 +180,15 @@ label {
 #sign-up {
     margin-right: 30px;
 }
+
+.jacek {
+    margin-bottom: 40px;
+}
+
+.gosia {
+    margin-bottom: 50px;
+}
+
+
+
+
