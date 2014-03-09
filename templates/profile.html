@@ -15,10 +15,15 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
   </head>
   <body>
+    <p>{{ user.email }}</p>
     <p>{{ user.display_name }}</p>
     <p>{{ user.headline }}</p>
     <p>{{ user.location }}</p>
     <p>{{ user.industry }}</p>
+    <img src="{{ user.photo_url }}">
+
+    <h2>Summary</h2>
+    <p>{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>
 
     <h2>Skills</h2>
     {% for skill in linkedin["skills"]["values"] %}
@@ -27,10 +32,32 @@
 
     <h2>Jobs</h2>
     {% for position in linkedin["positions"]["values"] %}
-      <p>{{ position }}</p>
+      <h3>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h3>
+      <p> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
+        {% if "endDate" in position %}
+            {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
+        {% else %}
+            current
+        {% endif %} </p>
+      <p>{% for line in position["summary"].splitlines() %}
+            {{line}} <br>
+        {% endfor %}
+      </p>
     {% endfor %}
 
+    <h2>Interests</h2>
+    <p>{{ linkedin["interests"] }}</p>
 
-     <p>{{ linkedin }}</p>
+    <h2>Associations</h2>
+    <p>{{ linkedin["associations"] }}</p>
+
+    <h2>Education</h2>
+    {% for education in linkedin["educations"]["values"] %}
+        <h3>{{ education["schoolName"] }}</h3>
+        <p>{{ education["startDate"]["year"] }} - {{ education["endDate"]["year"] }}</p>
+        <p>{{ education["fieldOfStudy"] }}</p>
+        <p>{{ education["activities"] }}</p>
+        <p>{{ education["notes"] }}</p>
+    {% endfor %}
   </body>
 </html>
