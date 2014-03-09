@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Index, ForeignKey, Text
+from sqlalchemy import create_engine, Column, Integer, String, Index, ForeignKey, Text, DateTime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from flask.ext.login import UserMixin
@@ -12,7 +13,11 @@ app.config["SQLALCHEMY_ECHO"] = config.DB_DEBUG_ECHO
 
 db = SQLAlchemy(app)
 
-class User(db.Model, UserMixin):
+class TimeMixin(object):
+  created_at = Column(DateTime, default=datetime.utcnow)
+  updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class User(db.Model, UserMixin, TimeMixin):
   __tablename__ = "user"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
@@ -26,7 +31,7 @@ class User(db.Model, UserMixin):
 
   __table_args__ = (Index("user_email_idx", "email", unique=True),)
 
-class Profile(db.Model):
+class Profile(db.Model, TimeMixin):
   __tablename__ = "profile"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
