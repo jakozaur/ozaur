@@ -202,5 +202,29 @@ label {
     font-family: 'Open Sans', sans-serif;
 }
 
+#interested-in {
+    margin-top: 20px;
+}
 
+#interested-in textarea {
+    width: 400px;
+    height: 80px;
+    margin-bottom: 25px;
+}
+
+button.save {
+    margin: 10px 0;
+    border: 1px solid black;
+}
+
+button.save:hover {
+    border: 1px solid grey;
+}
+
+
+@media (max-width: 450px) {
+   #interested-in textarea {
+    width: 330px;
+   } 
+}
 

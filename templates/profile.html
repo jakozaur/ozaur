@@ -46,6 +46,19 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-xs-8 col-xs-offset-1 col-sm-6 col-sm-offset-2 col-md-4 col-md-offset-3 col-lg-4 col-lg-offset-3">
+            <div id="interested-in">
+                <p class="about">Interested in (pitch yourself!):</p>
+                <input type="hidden" value="{{ user.id }}">
+                <textarea>{{ user.interested_in }}</textarea>
+                <div id="alert" class="alert alert-success alert-dismissable" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Your interests were saved successfully!
+                </div>
+                <button class="btn btn-default save">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
             <h3>Summary</h3>
             <p class="about">{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>

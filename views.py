@@ -73,6 +73,14 @@ def create_account():
 
   return render_template("profile.html", user = user, linkedin = linkedin)
 
+# AJAX API
+@app.route("/account/<int:user_id>/interested_in", methods=["POST"])
+def save_interested_in(user_id):
+  user = User.query.filter(User.id == user_id).first()
+  user.interested_in = request.form["interested_in"]
+  db.session.commit()
+  return "OK"
+
 if __name__ == "__main__":
     app.run(debug=config.APP_DEBUG)
 
