@@ -18,7 +18,7 @@
     <body>
         <h1>Our awesome users</h1>
         {% for user in pagination.items %}
-            <h2>{{ user.display_name }}</h2>
+            <h2><a href="{{ url_for('public_profile', id=user.id) }}">{{ user.display_name }}</a></h2>
             <img src="{{ user.photo_url }}">
             <p>{{ user.headline }}</p>
             <p>{{ user.industry }}</p>

@@ -25,6 +25,16 @@ def profiles(page):
   pagination = User.query.paginate(page)
   return render_template("profiles.html", pagination=pagination)
 
+@app.route("/profile/<int:id>")
+def public_profile(id):
+  user = User.query.filter(User.id == id).first()
+  # TODO: Change when we will have more profiles per user
+  profile = user.profiles[0]
+
+  linkedin = json.loads(profile.data_json)
+
+  return render_template("profile.html", user=user, linkedin=linkedin)
+
 @app.route("/create_account", methods=["POST"])
 def create_account():
   linkedin_oauth_token = request.form["linkedin_oauth_token"]
