@@ -9,16 +9,21 @@ from main import app
 
 @app.route("/")
 def main_page():
-    return render_template("index.html")
+  return render_template("index.html")
 
 @app.route("/signup")
 def signup():
-    return render_template("signup.html")
+  return render_template("signup.html")
 
 @app.route("/team")
 def team():
-    return render_template("team.html")
+  return render_template("team.html")
 
+@app.route("/profiles", defaults={'page': 1})
+@app.route("/profiles/page/<int:page>")
+def profiles(page):
+  pagination = User.query.paginate(page)
+  return render_template("profiles.html", pagination=pagination)
 
 @app.route("/create_account", methods=["POST"])
 def create_account():

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ozaur</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" charset="utf-8">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/static/js/application.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>  
+        <link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    </head> 
+    <body>
+        <h1>Our awesome users</h1>
+        {% for user in pagination.items %}
+            <h2>{{ user.display_name }}</h2>
+            <img src="{{ user.photo_url }}">
+            <p>{{ user.headline }}</p>
+            <p>{{ user.industry }}</p>
+            <p>{{ user.location }}</p>
+            <p>Interests: {{ user.interested_in }}</p>
+        {% endfor %}
+
+
+        <p>Pages:</p>
+        <div class="pagination">
+          {% for page in pagination.iter_pages() %}
+            {% if page %}
+              {% if page != pagination.page %}
+                <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+              {% else %}
+                <strong>{{ page }}</strong>
+              {% endif %}
+            {% else %}
+              <span class="ellipsis">…</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+    </body>
+</html>
+
+
+
+
+
+
