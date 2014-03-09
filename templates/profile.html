@@ -15,6 +15,8 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
   </head>
   <body>
+  {% set num_to_month = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
+        7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"} %}
     <nav class="navbar" role="navigation">
         <a href="/" class="navbar-brand">Ozaur</a>
             <div id="upper-navbar">
@@ -71,9 +73,9 @@
                 {% for position in linkedin["positions"]["values"] %}
                     <div class="job">
                         <h4>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h4>
-                        <h4> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
+                        <h4> {{ num_to_month[position["startDate"]["month"]] }} {{ position["startDate"]["year"] }} -
                             {% if "endDate" in position %}
-                                {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
+                                {{ num_to_month[position["endDate"]["month"]] }} {{ position["endDate"]["year"] }}
                             {% else %}
                                 current
                             {% endif %} </h4>
