@@ -60,13 +60,14 @@
     </div>
     <div class="row">
       <div class="col-xs-1 col-xs-offset-4 col-sm-1 col-sm-offset-5 col-md-1 col-md-offset-5 col-lg-4 col-lg-offset-5">
-        <span>
-          <form>
-            <input id="agree-checkbox" type="checkbox" />
-            <label for="agree-checkbox"> I agree with the rules</label>
-          </form>
-          <span id="sign-up">Sign up with LinkedIn</span>
-          <img class="signup" src="static/images/signup_linkedin.png"></span>
+        <form>
+          <input id="sign-up-agree-checkbox" type="checkbox" />
+          <label for="agree-checkbox"> I agree with the rules</label>
+        </form>
+        <button id="sign-up-button" class="btn btn-default">Sign up with LinkedIn
+          <img src="static/images/signup_linkedin.png">
+        </button>
+
       </div>
     </div>
 
@@ -78,6 +79,15 @@
       var LinkedIn = {
         onLoad: function() {
           IN.Event.on(IN, "auth", LinkedIn.onAuth);
+          $("#sign-up-button").click(function() {
+            if ($("#sign-up-agree-checkbox").prop("checked")) {
+              console.log("Clicked sign up buton... authorize with LinkedIN");
+              IN.User.authorize(function() {});
+            } else {
+              console.log("Clicked sign up buton... agree check box is missing");
+              alert("You need to agree with terms by checking the box first.")
+            }
+          });
         },
 
         onAuth: function() {

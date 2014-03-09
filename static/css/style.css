@@ -163,11 +163,6 @@ img.icon-large {
     }
 }
 
-img.signup {
-    margin-top: 50px;
-    margin-bottom: 70px;
-}
-
 img.portrait {
     border-radius: 70px;
     margin: 30px;
@@ -175,10 +170,6 @@ img.portrait {
 
 label {
     margin-left: 10px;
-}
-
-#sign-up {
-    margin-right: 30px;
 }
 
 .jacek {
