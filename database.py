@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Index, ForeignKey, Text, DateTime
+from sqlalchemy import create_engine, Column, Integer, BigInteger, \
+   Enum, Boolean, String, Index, ForeignKey, Text, DateTime
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -17,6 +18,7 @@ class TimeMixin(object):
   created_at = Column(DateTime, default=datetime.utcnow)
   updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+
 class User(db.Model, UserMixin, TimeMixin):
   __tablename__ = "user"
 
@@ -31,6 +33,7 @@ class User(db.Model, UserMixin, TimeMixin):
 
   __table_args__ = (Index("user_email_idx", "email", unique=True),)
 
+
 class Profile(db.Model, TimeMixin):
   __tablename__ = "profile"
 
@@ -41,6 +44,78 @@ class Profile(db.Model, TimeMixin):
   data_json = Column(Text)
 
   user = relationship("User", backref="profiles")
+
+
+class Bid(db.Model, TimeMixin):
+  __tablename__ = "bid"
+
+  id = Column(Integer, primary_key=True, autoincrement=True)
+  buyer_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  seller_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  value_satoshi = Column(BigInteger, nullable=False)
+  coinbase_order = Column(String(64), nullable=False)
+
+  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
+  seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
+
+
+class Transaction(db.Model, TimeMixin):
+  __tablename__ = "transaction"
+
+  id = Column(Integer, primary_key=True, autoincrement=True)
+  bid_id_old = Column(Integer, nullable=False)
+  bid_created_at = Column(DateTime, nullable=False)
+  buyer_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  seller_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  value_satoshi = Column(BigInteger, nullable=False)
+  coinbase_order = Column(String(64), nullable=False)
+  status = Column(Enum("wait_for_question", "wait_for_answer", "success", "timeout_on_question", "timeout_on_answer",
+    name="transaction_status_type"), nullable=False)
+
+  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
+  seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
+
+
+class Payout(db.Model, TimeMixin):
+  __tablename__ = "payout"
+
+  id = Column(Integer, primary_key=True, autoincrement=True)
+  transaction_id = Column(Integer, ForeignKey("transaction.id"), nullable=False)
+  user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  value_satoshi = Column(BigInteger, nullable=False)
+  paid_date = Column(DateTime)
+  is_paid = Column(Boolean, nullable=False, default=True)
+
+  user = relationship("User", backref="payouts")
+  transaction = relationship("Transaction", backref="payouts")
+
+
+email_purpose_type = Enum("verify", "ask", "respond", "survey", name="email_purpose_type")
+
+class Email(db.Model, TimeMixin):
+  __tablename__ = "email"
+
+  id = Column(Integer, primary_key=True, autoincrement=True)
+  to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  email_hash = Column(String(64), nullable=False)
+  purpose = Column(email_purpose_type, nullable=False)
+
+  user = relationship("User", backref="active_emails")
+
+
+class EmailArchive(db.Model, TimeMixin):
+  __tablename__ = "email_archive"
+
+  id = Column(Integer, primary_key=True, autoincrement=True)
+  email_id_old = Column(Integer, nullable=False)
+  bid_created_at = Column(DateTime, nullable=False)
+  to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  email_hash = Column(String(64), nullable=False)
+  purpose = Column(email_purpose_type, nullable=False)
+  result = Column(String(128), nullable=False)
+
+  user = relationship("User", backref="archive_emails")
+
 
 def create_schema():
   db.create_all()
