@@ -180,6 +180,10 @@ label {
     margin-bottom: 50px;
 }
 
-
-
+#sign-up-button {
+    margin: 30px 30px 60px -25px;
+    border: 1px solid black;
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+}
 
