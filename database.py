@@ -24,6 +24,7 @@ class User(db.Model, UserMixin, TimeMixin):
 
   id = Column(Integer, primary_key=True, autoincrement=True)
   email = Column(String(256), nullable=False)
+  active = Column(Boolean, nullable=False, default=False)
   display_name = Column(String(64), nullable=False)
   headline = Column(String(128), nullable=False)
   industry = Column(String(64), nullable=False)
@@ -45,6 +46,8 @@ class Profile(db.Model, TimeMixin):
 
   user = relationship("User", backref="profiles")
 
+  __table_args__ = (Index("profile_user_id_idx", "user_id"),)
+
 
 class Bid(db.Model, TimeMixin):
   __tablename__ = "bid"
@@ -57,6 +60,8 @@ class Bid(db.Model, TimeMixin):
 
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
+
+  __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
 
 
 class Transaction(db.Model, TimeMixin):
@@ -75,6 +80,8 @@ class Transaction(db.Model, TimeMixin):
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
 
+  __table_args__ = (Index("transaction_buyer_user_id_idx", "buyer_user_id"), Index("transaction_seller_user_id_idx", "seller_user_id"),)
+
 
 class Payout(db.Model, TimeMixin):
   __tablename__ = "payout"
@@ -89,6 +96,8 @@ class Payout(db.Model, TimeMixin):
   user = relationship("User", backref="payouts")
   transaction = relationship("Transaction", backref="payouts")
 
+  __table_args__ = (Index("payout_user_id_idx", "user_id"), Index("payout_transaction_id_idx", "transaction_id"),)
+
 
 email_purpose_type = Enum("verify", "ask", "respond", "survey", name="email_purpose_type")
 
@@ -97,16 +106,23 @@ class Email(db.Model, TimeMixin):
 
   id = Column(Integer, primary_key=True, autoincrement=True)
   to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+  transaction_id = Column(Integer, ForeignKey("transaction.id"))
   email_hash = Column(String(64), nullable=False)
   purpose = Column(email_purpose_type, nullable=False)
 
   user = relationship("User", backref="active_emails")
+  transaction = relationship("Transaction", backref="active_emails")
+
+  __table_args__ = (Index("email_to_user_id_idx", "to_user_id"),
+    Index("email_transaction_id_idx", "transaction_id"),
+    Index("email_email_hash_idx", "email_hash", unique=True),)
 
 
 class EmailArchive(db.Model, TimeMixin):
   __tablename__ = "email_archive"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
+  transaction_id = Column(Integer, ForeignKey("transaction.id"))
   email_id_old = Column(Integer, nullable=False)
   bid_created_at = Column(DateTime, nullable=False)
   to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
@@ -115,6 +131,12 @@ class EmailArchive(db.Model, TimeMixin):
   result = Column(String(128), nullable=False)
 
   user = relationship("User", backref="archive_emails")
+  transaction = relationship("Transaction", backref="archive_mails")
+
+  __table_args__ = (Index("email_archive_to_user_id_idx", "to_user_id"),
+    Index("email_archive_transaction_id_idx", "transaction_id"),
+    Index("email_archive_email_hash_idx", "email_hash"),)
+
 
 
 def create_schema():
