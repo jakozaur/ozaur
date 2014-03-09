@@ -15,49 +15,100 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <p>{{ user.email }}</p>
-    <p>{{ user.display_name }}</p>
-    <p>{{ user.headline }}</p>
-    <p>{{ user.location }}</p>
-    <p>{{ user.industry }}</p>
-    <img src="{{ user.photo_url }}">
+    <nav class="navbar" role="navigation">
+        <a href="/" class="navbar-brand">Ozaur</a>
+            <div id="upper-navbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/team">Team</a></li>
+              </ul>
+            <div>
+        </nav>
+    <div class="row">
+        <div class="row">
+            <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-4 col-sm-2 col-sm-offset-6 col-md-1 col-md-offset-8 col-lg-1 col-lg-offset-8">
+                        <img class="user-portrait" src="{{ user.photo_url }}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+                        <h2>{{ user.display_name }}</h2>
+                         <p class="about">{{ user.email }}</p>
+                        <p>{{ user.headline }}</p>
+                        <p>{{ user.location }}</p>
+                        <p>{{ user.industry }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Summary</h3>
+            <p class="about">{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>
+        </div>
+    </div>
 
-    <h2>Summary</h2>
-    <p>{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Jobs</h3>
+            {% for position in linkedin["positions"]["values"] %}
+              <h4>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h4>
+              <h4> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
+                {% if "endDate" in position %}
+                    {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
+                {% else %}
+                    current
+                {% endif %} </h4>
+              <p class="about">{% for line in position["summary"].splitlines() %}
+                    {{line}} <br>
+                {% endfor %}
+              </p>
+            {% endfor %}
+        </div>
+    </div>
 
-    <h2>Skills</h2>
-    {% for skill in linkedin["skills"]["values"] %}
-        <p>{{ skill["skill"]["name"] }}</p>
-    {% endfor %}
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Skills</h3>
+            {% for skill in linkedin["skills"]["values"] %}
+                <span>{{ skill["skill"]["name"] }},</span>
+            {% endfor %}
+        </div>
+    </div>
 
-    <h2>Jobs</h2>
-    {% for position in linkedin["positions"]["values"] %}
-      <h3>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h3>
-      <p> {{ position["startDate"]["month"]}} {{ position["startDate"]["year"] }} -
-        {% if "endDate" in position %}
-            {{ position["endDate"]["month"]}} {{ position["endDate"]["year"] }}
-        {% else %}
-            current
-        {% endif %} </p>
-      <p>{% for line in position["summary"].splitlines() %}
-            {{line}} <br>
-        {% endfor %}
-      </p>
-    {% endfor %}
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Education</h3>
+            {% for education in linkedin["educations"]["values"] %}
+                <h4>{{ education["schoolName"] }}</h4>
+                <p class="about">{{ education["startDate"]["year"] }} - {{ education["endDate"]["year"] }}</p>
+                <p class="about">{{ education["fieldOfStudy"] }}</p>
+                <p class="about">{{ education["activities"] }}</p>
+                <p class="about">{{ education["notes"] }}</p>
+            {% endfor %}
+        </div>
+    <div>
 
-    <h2>Interests</h2>
-    <p>{{ linkedin["interests"] }}</p>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Interests</h3>
+            <p class="about">{{ linkedin["interests"] }}</p>
+        </div>
+    </div>
 
-    <h2>Associations</h2>
-    <p>{{ linkedin["associations"] }}</p>
-
-    <h2>Education</h2>
-    {% for education in linkedin["educations"]["values"] %}
-        <h3>{{ education["schoolName"] }}</h3>
-        <p>{{ education["startDate"]["year"] }} - {{ education["endDate"]["year"] }}</p>
-        <p>{{ education["fieldOfStudy"] }}</p>
-        <p>{{ education["activities"] }}</p>
-        <p>{{ education["notes"] }}</p>
-    {% endfor %}
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <h3>Associations</h3>
+            <p class="about">{{ linkedin["associations"] }}</p>
+        </div>
+    </div>
   </body>
 </html>
+
+
+
+

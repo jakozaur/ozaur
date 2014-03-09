@@ -101,13 +101,23 @@ p, label, #sign-up {
     line-height: 30px;
 }
 
-li, .about {
+li, .about, span {
     font-size: 15px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     text-align: justify;
     line-height: 30px;
 }
+
+h2, h3, h4 {
+    font-family: 'Raleway', sans-serif;
+}
+
+h3 {
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
 
 .how-works-step {
     margin-top: 50px;
@@ -168,6 +178,11 @@ img.portrait {
     margin: 30px;
 }
 
+img.user-portrait {
+    margin-top: 80px;
+}
+
+
 label {
     margin-left: 10px;
 }
@@ -186,4 +201,6 @@ label {
     font-size: 18px;
     font-family: 'Open Sans', sans-serif;
 }
+
+
 
