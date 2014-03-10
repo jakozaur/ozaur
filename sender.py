@@ -1,19 +1,34 @@
 import requests
 
 import config
+from database import db, Email
 
-class Mailer(object):
-  def __init__(self):
-    self.api_key = config.MAILGUN_API_KET
+class Sender(object):
+  def __init__(self, user):
+    self.api_key = config.MAILGUN_API_KEY
     self.domain = config.MAILGUN_DOMAIN
+    self.user = user
 
-  def send_welcome_email(self, email, name, user_email_id):
-    return requests.post(
+  def send_welcome_email(self):
+    if self.user.active:
+      return # User is already active
+
+    previous_email = Email.query.filter(Email.to_user_id == self.user.id, Email.purpose == "verify").first()
+    if previous_email:
+      return # Previous email was already sent
+
+    email = Email(to_user_id = self.user.id,
+      purpose = "verify")
+
+    db.session.add(email) 
+    db.session.commit()
+
+    response = requests.post(
         "https://api.mailgun.net/v2/%s/messages" % (self.domain),
         auth=("api", self.api_key),
-        data={"from": "Ozaur messenger <%s.messenger@%s>" % (
-              user_email_id, self.domain),
-            "to": [email],
+        data={"from": "Ozaur messenger <%s@%s>" % (
+              self.user.address_hash, self.domain),
+            "to": [self.user.email],
             "subject": "Welcome to Ozaur! Earn bitcoins soon...",
             "text": """
 Welcome %(name)s!
@@ -27,7 +42,12 @@ Yours truly,
 Ozaur
 
 PS: If you didn't register to Ozaur, please ignore this message.
-""" % {"name": name}})
+
+Hash: %(hash)s (please don't remove it)
+""" % {"name": self.user.display_name, "hash": email.email_hash }})
+
+    if not response.ok:
+      pass # TODO: Do something
 
   def find_confirmations(self):
     emails = self.fetch_stored_emails()

@@ -19,12 +19,12 @@
         7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"} %}
     <nav class="navbar" role="navigation">
         <a href="/" class="navbar-brand">Ozaur</a>
-            <div id="upper-navbar">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="/team">Team</a></li>
-              </ul>
-            <div>
-        </nav>
+        <div id="upper-navbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/team">Team</a></li>
+          </ul>
+        <div>
+    </nav>
     <div class="row">
         <div class="row">
             <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
                         <h2>{{ user.display_name }}</h2>
-                         <p class="about">{{ user.email }}</p>
+                         <p class="about">{{ user.email }} {% if not user.active %} (Please activate your email) {% endif %}</p>
                         <p>{{ user.headline }}</p>
                         <p>{{ user.location }}</p>
                         <p>{{ user.industry }}</p>

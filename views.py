@@ -6,6 +6,7 @@ import requests
 import config
 from database import db, User, Profile
 from main import app
+from sender import Sender
 
 @app.route("/")
 def main_page():
@@ -70,6 +71,9 @@ def create_account():
     profile = user.profiles[0]
 
   linkedin = json.loads(profile.data_json)
+
+  sender = Sender(user)
+  sender.send_welcome_email()
 
   return render_template("profile.html", user = user, linkedin = linkedin)
 

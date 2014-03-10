@@ -8,6 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 from main import app
 import config
+from hasher import random_address_hash, random_email_hash
 
 app.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URL
 app.config["SQLALCHEMY_ECHO"] = config.DB_DEBUG_ECHO
@@ -25,6 +26,7 @@ class User(db.Model, UserMixin, TimeMixin):
   id = Column(Integer, primary_key=True, autoincrement=True)
   email = Column(String(256), nullable=False)
   active = Column(Boolean, nullable=False, default=False)
+  address_hash = Column(String(40), default=random_address_hash, nullable=False)
   display_name = Column(String(64), nullable=False)
   headline = Column(String(128), nullable=False)
   industry = Column(String(64), nullable=False)
@@ -32,7 +34,8 @@ class User(db.Model, UserMixin, TimeMixin):
   interested_in = Column(String(256), nullable=False)
   photo_url = Column(String(256))
 
-  __table_args__ = (Index("user_email_idx", "email", unique=True),)
+  __table_args__ = (Index("user_email_idx", "email", unique=True),
+    Index("user_address_hash_idx", "address_hash", unique=True),)
 
 
 class Profile(db.Model, TimeMixin):
@@ -58,8 +61,8 @@ class Bid(db.Model, TimeMixin):
   value_satoshi = Column(BigInteger, nullable=False)
   coinbase_order = Column(String(64), nullable=False)
 
-  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
-  seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
+  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_bid")
+  seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_bid")
 
   __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
 
@@ -77,8 +80,8 @@ class Transaction(db.Model, TimeMixin):
   status = Column(Enum("wait_for_question", "wait_for_answer", "success", "timeout_on_question", "timeout_on_answer",
     name="transaction_status_type"), nullable=False)
 
-  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="my_bids")
-  seller = relationship("User", foreign_keys=[seller_user_id], backref="bid_on_me")
+  buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_transaction")
+  seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_transaction")
 
   __table_args__ = (Index("transaction_buyer_user_id_idx", "buyer_user_id"), Index("transaction_seller_user_id_idx", "seller_user_id"),)
 
@@ -107,7 +110,7 @@ class Email(db.Model, TimeMixin):
   id = Column(Integer, primary_key=True, autoincrement=True)
   to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
   transaction_id = Column(Integer, ForeignKey("transaction.id"))
-  email_hash = Column(String(64), nullable=False)
+  email_hash = Column(String(64), default=random_email_hash, nullable=False)
   purpose = Column(email_purpose_type, nullable=False)
 
   user = relationship("User", backref="active_emails")
