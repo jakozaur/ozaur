@@ -85,6 +85,57 @@ def save_interested_in(user_id):
   db.session.commit()
   return "OK"
 
+# Email receiver api
+@app.route("/notify/mail")
+def mailgun_notification():
+  # TODO: check if it is mailgun
+  recipient = request.form["recipient"]
+  sender = request.form["sender"]
+  body = request.form["body-plain"]
+  stripped = request.form("stripped-text")
+
+  user = User.query.filter(User.email == sender).first()
+  if not user:
+    print "Got email from unknown user '%s' to '%s'" % (sender, recipient)
+    return "Unknown user"
+
+  address_hash = recipient.split("@")[0]
+
+  if user.address_hash != address_hash:
+    print "Invalid address '%s' from '%s'" % (recipient, sender)
+    return "Email sent to invalid address"
+
+  print "Waiting for following emails from user '%s'" % (sender)
+  for email in user.active_emails:
+    print " - purpose %s" % (email.purpose)
+
+  matched_emails = filter(user.active_emails, lambda e: e.email_hash in body)
+
+  if len(matched_emails) == 0:
+    return "No matched emails"
+
+  if len(matched_emails) > 1:
+    print "WARN: Multiple matched email found"
+
+  matched_email = matched_emails[0]
+
+  if matched_email.purpose == "verify":
+    if "JOIN OZAUR" in stripped:
+      print "Verified user '%s'" % (sender)
+      user.active = True
+      archive = matched_email.to_archive("Verified!")
+      db.session.remove(matched_email)
+      db.session.add(user)
+      db.session.add(archive)
+      db.session.commit()
+    else:
+      print "Reply  verify email was invalid"
+  else:
+    print "Unknown purpose '%s'" % (matched_email.purpose)
+    return "Unknown purpose"
+
+  return "OK"
+
 if __name__ == "__main__":
     app.run(debug=config.APP_DEBUG)
 

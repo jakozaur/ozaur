@@ -120,18 +120,28 @@ class Email(db.Model, TimeMixin):
     Index("email_transaction_id_idx", "transaction_id"),
     Index("email_email_hash_idx", "email_hash", unique=True),)
 
+  def to_archive(self, result = "OK"):
+    return EmailArchive(
+      to_user_id = self.to_user_id,
+      transaction_id = self.transaction_id,
+      email_hash = self.email_hash,
+      purpose = self.purpose,
+      result = result,
+      email_id_old = self.id,
+      email_created_at = self.created_at)
 
 class EmailArchive(db.Model, TimeMixin):
   __tablename__ = "email_archive"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
   transaction_id = Column(Integer, ForeignKey("transaction.id"))
-  email_id_old = Column(Integer, nullable=False)
-  bid_created_at = Column(DateTime, nullable=False)
   to_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
   email_hash = Column(String(64), nullable=False)
   purpose = Column(email_purpose_type, nullable=False)
   result = Column(String(128), nullable=False)
+
+  email_id_old = Column(Integer, nullable=False)
+  email_created_at = Column(DateTime, nullable=False)
 
   user = relationship("User", backref="archive_emails")
   transaction = relationship("Transaction", backref="archive_mails")
