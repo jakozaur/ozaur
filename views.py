@@ -121,7 +121,7 @@ def mailgun_notification():
       app.logger.info("Verified user '%s'" % (sender))
       user.active = True
       archive = matched_email.to_archive("Verified!")
-      db.session.remove(matched_email)
+      db.session.delete(matched_email)
       db.session.add(user)
       db.session.add(archive)
       db.session.commit()
