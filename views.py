@@ -92,7 +92,7 @@ def mailgun_notification():
   recipient = request.form["recipient"]
   sender = request.form["sender"]
   body = request.form["body-plain"]
-  stripped = request.form("stripped-text")
+  stripped = request.form["stripped-text"]
 
   address_hash = recipient.split("@")[0]
   user = User.query.filter(User.address_hash == address_hash).first()
