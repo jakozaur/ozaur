@@ -56,6 +56,9 @@ response = vpc.authorize_security_group(**args)
 assert response, "Can't authorize RDS to talk with me"
 
 import database
+print "Deleting DB schema"
+database.delete_schema()
+
 print "Creating DB schema"
 database.create_schema()
 
