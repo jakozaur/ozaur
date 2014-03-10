@@ -94,16 +94,12 @@ def mailgun_notification():
   body = request.form["body-plain"]
   stripped = request.form("stripped-text")
 
-  user = User.query.filter(User.email == sender).first()
-  if not user:
-    app.logger.warn("Got email from unknown user '%s' to '%s'" % (sender, recipient))
-    return "Unknown user"
-
   address_hash = recipient.split("@")[0]
+  user = User.query.filter(User.address_hash == address_hash).first()
 
-  if user.address_hash != address_hash:
-    app.logger.warn("Invalid address '%s' from '%s'" % (recipient, sender))
-    return "Email sent to invalid address"
+  if not user:
+    app.logger.warn("Unknown user [From=%s] from [To=%s]" % (sender, recipient))
+    return "Unknown user"
 
   app.logger.info("Waiting for following emails from user '%s'" % (sender))
   for email in user.active_emails:
