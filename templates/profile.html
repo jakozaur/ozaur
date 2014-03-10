@@ -63,17 +63,17 @@
     </div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-            <h3>Summary</h3>
+            <h2>Summary</h2>
             <p class="about">{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-            <h3>Jobs</h3>
+            <h2>Jobs</h2>
                 {% for position in linkedin["positions"]["values"] %}
                     <div class="job">
-                        <h4>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h4>
+                        <h3>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h3>
                         <h4> {{ num_to_month[position["startDate"]["month"]] }} {{ position["startDate"]["year"] }} -
                             {% if "endDate" in position %}
                                 {{ num_to_month[position["endDate"]["month"]] }} {{ position["endDate"]["year"] }}
