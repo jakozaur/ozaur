@@ -86,7 +86,7 @@ def save_interested_in(user_id):
   return "OK"
 
 # Email receiver api
-@app.route("/notify/mail")
+@app.route("/notify/mail", methods=["POST"])
 def mailgun_notification():
   # TODO: check if it is mailgun
   recipient = request.form["recipient"]
