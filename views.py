@@ -96,32 +96,33 @@ def mailgun_notification():
 
   user = User.query.filter(User.email == sender).first()
   if not user:
-    print "Got email from unknown user '%s' to '%s'" % (sender, recipient)
+    app.logger.warn("Got email from unknown user '%s' to '%s'" % (sender, recipient))
     return "Unknown user"
 
   address_hash = recipient.split("@")[0]
 
   if user.address_hash != address_hash:
-    print "Invalid address '%s' from '%s'" % (recipient, sender)
+    app.logger.warn("Invalid address '%s' from '%s'" % (recipient, sender))
     return "Email sent to invalid address"
 
-  print "Waiting for following emails from user '%s'" % (sender)
+  app.logger.info("Waiting for following emails from user '%s'" % (sender))
   for email in user.active_emails:
-    print " - purpose %s" % (email.purpose)
+    app.logger.info(" - purpose %s" % (email.purpose))
 
   matched_emails = filter(user.active_emails, lambda e: e.email_hash in body)
 
   if len(matched_emails) == 0:
+    app.logger.info("No matched emails for '%s'" % (sender))
     return "No matched emails"
 
   if len(matched_emails) > 1:
-    print "WARN: Multiple matched email found"
+    app.logger.info("Multiple matched email found '%s'" % (sender))
 
   matched_email = matched_emails[0]
 
   if matched_email.purpose == "verify":
     if "JOIN OZAUR" in stripped:
-      print "Verified user '%s'" % (sender)
+      app.logger.info("Verified user '%s'" % (sender))
       user.active = True
       archive = matched_email.to_archive("Verified!")
       db.session.remove(matched_email)
@@ -129,9 +130,9 @@ def mailgun_notification():
       db.session.add(archive)
       db.session.commit()
     else:
-      print "Reply  verify email was invalid"
+      app.logger.warn("Reply verify email was invalid")
   else:
-    print "Unknown purpose '%s'" % (matched_email.purpose)
+    app.logger.warn("Unknown purpose '%s'" % (matched_email.purpose))
     return "Unknown purpose"
 
   return "OK"

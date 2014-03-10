@@ -1,6 +1,7 @@
 import requests
 
 import config
+from main import app
 from database import db, Email
 
 class Sender(object):
@@ -11,11 +12,13 @@ class Sender(object):
 
   def send_welcome_email(self):
     if self.user.active:
-      return # User is already active
+      app.logger.warn("User '%s' is already activate" % (self.user.email))
+      return
 
     previous_email = Email.query.filter(Email.to_user_id == self.user.id, Email.purpose == "verify").first()
     if previous_email:
-      return # Previous email was already sent
+      app.logger.warn("We already sent email to '%s'" % (self.user.email))
+      return
 
     email = Email(to_user_id = self.user.id,
       purpose = "verify")
@@ -46,8 +49,10 @@ PS: If you didn't register to Ozaur, please ignore this message.
 Hash: %(hash)s (please don't remove it)
 """ % {"name": self.user.display_name, "hash": email.email_hash }})
 
-    if not response.ok:
-      pass # TODO: Do something
+    if response.ok:
+      app.logger.info("Confirmation email sent to '%s'" % (self.user.email))
+    else:
+      app.logger.error("Couldn't sent verify email 5 '%s': %s" %(self.user.email, response.text))
 
   def find_confirmations(self):
     emails = self.fetch_stored_emails()
