@@ -105,7 +105,7 @@ def mailgun_notification():
   for email in user.active_emails:
     app.logger.info(" - purpose %s" % (email.purpose))
 
-  matched_emails = filter(user.active_emails, lambda e: e.email_hash in body)
+  matched_emails = filter(lambda e: e.email_hash in body, user.active_emails)
 
   if len(matched_emails) == 0:
     app.logger.info("No matched emails for '%s'" % (sender))
