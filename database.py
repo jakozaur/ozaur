@@ -28,10 +28,10 @@ class User(db.Model, UserMixin, TimeMixin):
   active = Column(Boolean, nullable=False, default=False)
   address_hash = Column(String(40), default=random_address_hash, nullable=False)
   display_name = Column(String(64), nullable=False)
-  headline = Column(String(128), nullable=False)
-  industry = Column(String(64), nullable=False)
-  location = Column(String(64), nullable=False)
-  interested_in = Column(String(256), nullable=False)
+  headline = Column(String(128), default="Yet another human", nullable=False)
+  industry = Column(String(64), default="Communication", nullable=False)
+  location = Column(String(64), default="Earth", nullable=False)
+  interested_in = Column(String(256), default="Earning bitcoins", nullable=False)
   photo_url = Column(String(256))
 
   __table_args__ = (Index("user_email_idx", "email", unique=True),

@@ -6,7 +6,7 @@ import requests
 import config
 from database import db, User, Profile
 from main import app
-from sender import Sender
+from oemail import Sender
 
 @app.route("/")
 def main_page():
@@ -89,21 +89,18 @@ def save_interested_in(user_id):
 @app.route("/notify/mail", methods=["POST"])
 def mailgun_notification():
   # TODO: check if it is mailgun
+
+  # TODO: ensure it is not autoresponder
+
   recipient = request.form["recipient"]
   sender = request.form["sender"]
   body = request.form["body-plain"]
   stripped = request.form["stripped-text"]
 
+  # 
+
   address_hash = recipient.split("@")[0]
-  user = User.query.filter(User.address_hash == address_hash).first()
-
-  if not user:
-    app.logger.warn("Unknown user [From=%s] from [To=%s]" % (sender, recipient))
-    return "Unknown user"
-
-  app.logger.info("Waiting for following emails from user '%s'" % (sender))
-  for email in user.active_emails:
-    app.logger.info(" - purpose %s" % (email.purpose))
+  
 
   matched_emails = filter(lambda e: e.email_hash in body, user.active_emails)
 

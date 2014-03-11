@@ -1,8 +1,8 @@
 import os
 
 DB_URL = os.environ.get("OZAUR_DB_URL", "(db url)")
-DB_DEBUG_ECHO = os.environ.get("OZAUR_DB_DEBUG", "true").lower() == "true"
-APP_DEBUG = os.environ.get("OZAUR_APP_DEBUG", "true").lower() == "true"
+DB_DEBUG_ECHO = os.environ.get("OZAUR_DB_DEBUG", "false").lower() == "true"
+APP_DEBUG = os.environ.get("OZAUR_APP_DEBUG", "false").lower() == "true"
 
 MAILGUN_API_KEY = os.environ.get("OZAUR_MAILGUN_API_KEY", "(none)")
 MAILGUN_DOMAIN = os.environ.get("OZAUR_MAILGUN_DOMAIN", "(none)")
