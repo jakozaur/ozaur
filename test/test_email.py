@@ -18,11 +18,11 @@ class TestResponder(unittest.TestCase):
   def test_accept_invitation(self):
     user = User(email = "user@example.com", display_name = "First Last")
     email = Email(purpose = "verify")
-    user.active_emails.append(user)
+    user.active_emails.append(email)
     db.session.add(user)
     db.session.commit()
     sender = Mock()
-    responder = Responder(mock)
+    responder = Responder(sender)
     responder.process_email(user.address_hash + "@", "JOIN OZAUR; %s" % (email.email_hash), "JOIN OZAUR")
 
 if __name__ == '__main__':

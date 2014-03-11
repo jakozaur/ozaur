@@ -2,7 +2,7 @@ import requests
 
 import config
 from main import app
-from database import db, Email
+from database import db, Email, User
 
 
 class Responder(object):
@@ -69,11 +69,11 @@ class Responder(object):
 
     ok, status = actions[matched_email.purpose]()
 
-    app.logger.info("User '%s', action '%s', status '%s'" % (self.user.email, self.matched_email.purpose, status))
+    app.logger.info("User '%s', action '%s', status '%s'" % (user.email, matched_email.purpose, status))
 
-    if self.ok:
-      archive = self.matched_email.to_archive(status)
-      db.session.delete(self.matched_email)
+    if ok:
+      archive = matched_email.to_archive(status)
+      db.session.delete(matched_email)
       db.session.add(archive)
       db.session.commit()
 
