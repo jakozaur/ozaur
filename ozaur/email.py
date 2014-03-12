@@ -1,6 +1,7 @@
 import requests
 
 import config
+
 from main import app
 from database import db, Email, User
 

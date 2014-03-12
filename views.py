@@ -6,7 +6,7 @@ import requests
 import config
 from database import db, User, Profile
 from main import app
-from oemail import Sender
+from ozaur.email import Sender
 
 @app.route("/")
 def main_page():
