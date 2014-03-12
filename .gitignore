@@ -43,3 +43,6 @@ nosetests.xml
 
 # Logs
 logs/ozaur.log*
+
+# Mac
+.DS_Store
