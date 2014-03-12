@@ -69,7 +69,11 @@ class TestSender(unittest.TestCase):
     sender = Sender()
     sender._send_email = Mock()
     sender.send_invitation_email(user)
+    self.assertEqual(len(user.active_emails), 1)
     sender._send_email.assert_called_once()
+    email = user.active_emails[0]
+    args, kwargs = sender._send_email.call_args
+    self.assertIn(email.email_hash, args[-1])
 
 if __name__ == '__main__':
   unittest.main()

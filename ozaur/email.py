@@ -4,6 +4,7 @@ import config
 
 from main import app
 from database import db, Email, User
+from hasher import random_email_hash
 
 
 class Responder(object):
@@ -112,6 +113,7 @@ class Sender(object):
       return
 
     email = Email(to_user_id = user.id,
+      email_hash = random_email_hash(), # We need it b/c we use it before commit
       purpose = "verify")
 
     db.session.add(email) 
