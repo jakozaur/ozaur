@@ -139,4 +139,4 @@ Hash: %(hash)s (please don't remove it)
     pass
  
 
-process_email = Responder(Sender()).process_email
+process_incoming_email = Responder(Sender()).process_email

@@ -6,7 +6,7 @@ import requests
 import config
 from database import db, User, Profile
 from main import app
-from ozaur.email import Sender
+from ozaur.email import Sender, process_incoming_email
 
 @app.route("/")
 def main_page():
@@ -72,8 +72,8 @@ def create_account():
 
   linkedin = json.loads(profile.data_json)
 
-  sender = Sender(user)
-  sender.send_welcome_email()
+  sender = Sender()
+  sender.send_invitation_email(user)
 
   return render_template("profile.html", user = user, linkedin = linkedin)
 
@@ -93,40 +93,11 @@ def mailgun_notification():
   # TODO: ensure it is not autoresponder
 
   recipient = request.form["recipient"]
-  sender = request.form["sender"]
+  # sender = request.form["sender"]
   body = request.form["body-plain"]
   stripped = request.form["stripped-text"]
 
-  # 
-
-  address_hash = recipient.split("@")[0]
-  
-
-  matched_emails = filter(lambda e: e.email_hash in body, user.active_emails)
-
-  if len(matched_emails) == 0:
-    app.logger.info("No matched emails for '%s'" % (sender))
-    return "No matched emails"
-
-  if len(matched_emails) > 1:
-    app.logger.info("Multiple matched email found '%s'" % (sender))
-
-  matched_email = matched_emails[0]
-
-  if matched_email.purpose == "verify":
-    if "JOIN OZAUR" in stripped:
-      app.logger.info("Verified user '%s'" % (sender))
-      user.active = True
-      archive = matched_email.to_archive("Verified!")
-      db.session.delete(matched_email)
-      db.session.add(user)
-      db.session.add(archive)
-      db.session.commit()
-    else:
-      app.logger.warn("Reply verify email was invalid")
-  else:
-    app.logger.warn("Unknown purpose '%s'" % (matched_email.purpose))
-    return "Unknown purpose"
+  process_incoming_email(recipient, body, stripped)
 
   return "OK"
 
