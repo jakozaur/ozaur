@@ -5,14 +5,15 @@ app = Flask(__name__)
 import logging
 from logging import Formatter, getLogger
 from logging.handlers import RotatingFileHandler
-file_handler = RotatingFileHandler("logs/ozaur.log")
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(Formatter(
-  '%(asctime)s %(levelname)s: %(message)s '
-  '[in %(pathname)s:%(lineno)d]'
-))
 
-for logger in [app.logger, getLogger("sqlalchemy"), getLogger("werkzeug")]:
-	logger.setLevel(logging.INFO)
-	logger.addHandler(file_handler)
+
+for logger, name in [(app.logger, "ozaur"), (getLogger("sqlalchemy"), "sql"), (getLogger("werkzeug"), "werkzeug")]:
+  file_handler = RotatingFileHandler("logs/%s.log" % (name))
+  file_handler.setLevel(logging.INFO)
+  formatter = '%(asctime)s %(levelname)s: %(message)s '
+  if name == "ozaur":
+    formatter += '[in %(pathname)s:%(lineno)d]'
+  file_handler.setFormatter(Formatter(formatter))
+  logger.setLevel(logging.INFO)
+  logger.addHandler(file_handler)
 
