@@ -34,7 +34,7 @@ class TestResponder(unittest.TestCase):
     archive = EmailArchive.query.filter(EmailArchive.email_id_old == email.id).first()
     self.assertNotEqual(archive, None)
     self.assertEqual(archive.email_hash, email.email_hash)
-    sender.send_welcome_email.assert_called_once()
+    self.assertEqual(len(sender.send_welcome_email.call_args_list), 1)
 
   def test_ignore_invalid_address(self):
     user, email, sender, responder = self.create_sandbox()
@@ -70,7 +70,7 @@ class TestSender(unittest.TestCase):
     sender._send_email = Mock()
     sender.send_invitation_email(user)
     self.assertEqual(len(user.active_emails), 1)
-    sender._send_email.assert_called_once()
+    self.assertEqual(len(sender._send_email.call_args_list), 1)
     email = user.active_emails[0]
     args, kwargs = sender._send_email.call_args
     self.assertIn(email.email_hash, args[-1])

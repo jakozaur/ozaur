@@ -41,7 +41,7 @@ class Responder(object):
     def do_verify():
       if "JOIN OZAUR" in response.upper():
         user.active = True
-        # TODO: send welcome letter
+        self.sender.send_welcome_email(user)
         return True, "joined us!"
       else:
         return False, "'%s' doesn't have JOIN OZAUR!"
