@@ -106,12 +106,12 @@ class Sender(object):
       app.logger.warn("User '%s' is already activate" % (user.email))
       return
 
-    previous_email = Email.query.filter(Email.to_user_id == self.user.id, Email.purpose == "verify").first()
+    previous_email = Email.query.filter(Email.to_user_id == user.id, Email.purpose == "verify").first()
     if previous_email:
       app.logger.warn("We already sent email to '%s'" % (user.email))
       return
 
-    email = Email(to_user_id = self.user.id,
+    email = Email(to_user_id = user.id,
       purpose = "verify")
 
     db.session.add(email) 

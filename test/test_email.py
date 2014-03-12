@@ -6,7 +6,7 @@ import unittest
 from mock import Mock
 
 from database import create_schema, delete_schema, db, Email, User, EmailArchive
-from ozaur.email import Responder
+from ozaur.email import Responder, Sender
 
 class TestResponder(unittest.TestCase):
   def setUp(self):
@@ -55,6 +55,21 @@ class TestResponder(unittest.TestCase):
     self.assertEqual(user.active, False)
 
 
+class TestSender(unittest.TestCase):
+  def setUp(self):
+    create_schema()
+
+  def tearDown(self):
+    delete_schema()
+
+  def test_invitation_email(self):
+    user = User(email = "user@example.com", display_name = "First Last")
+    db.session.add(user)
+    db.session.commit()
+    sender = Sender()
+    sender._send_email = Mock()
+    sender.send_invitation_email(user)
+    sender._send_email.assert_called_once()
 
 if __name__ == '__main__':
   unittest.main()
