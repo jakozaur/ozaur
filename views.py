@@ -16,7 +16,6 @@ login_manager.init_app(app)
 def load_user(userid):
     return User.query.filter(User.id == userid).first()
 
-
 @app.route("/")
 def main_page():
   return render_template("index.html")
@@ -24,6 +23,17 @@ def main_page():
 @app.route("/signup")
 def signup():
   return render_template("signup.html")
+
+@app.route("/login", methods=["POST"])
+def login_post():
+  linkedin_oauth_token = request.form["linkedin_oauth_token"]
+  r = requests.get("https://api.linkedin.com/v1/people::(~):(id,email-address)",
+      headers={"oauth_token": linkedin_oauth_token,
+        "x-li-format": "json"})
+
+  user = User.query.filter(User.email == r.json()["values"][0]["emailAddress"]).first()
+  login_user(user)
+  return redirect(url_for("main_page"))
 
 @app.route("/logout")
 @login_required

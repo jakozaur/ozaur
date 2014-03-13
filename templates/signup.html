@@ -48,41 +48,6 @@
   </div>
 </div>
 
-<script type="text/javascript" src="http://platform.linkedin.com/in.js">
-    api_key: 75l6c5puk0y9n2
-    onLoad: LinkedIn.onLoad
-</script>
-<script type="text/javascript">
-  var LinkedIn = {
-    onLoad: function() {
-      IN.Event.on(IN, "auth", LinkedIn.onAuth);
-      $("#sign-up-button").click(function() {
-        if ($("#sign-up-agree-checkbox").prop("checked")) {
-          console.log("Clicked sign up buton... authorize with LinkedIN");
-          IN.User.authorize(function() {});
-        } else {
-          console.log("Clicked sign up buton... agree check box is missing");
-          alert("You need to agree with terms by checking the box first.")
-        }
-      });
-    },
-
-    onAuth: function() {
-      // Pass OAuth token to backend, which will fetch profile and create an account.
-      $("#signup_form input").val(IN.ENV.auth.oauth_token);
-      $("#signup_form").submit();
-    }
-  };
-
-</script>
-
-<!--
-<script type="in/Login">
-  Hello!
-</script>
--->
-
-<a href="/"></a>
 <form method="post" action="{{ url_for('create_account') }}" id="signup_form">
   <input type="hidden" name="linkedin_oauth_token" value="(none)">
 </form>

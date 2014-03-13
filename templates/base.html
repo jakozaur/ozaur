@@ -22,12 +22,26 @@
                 <a href="/" class="navbar-brand">Ozaur</a>
                 <div id="upper-navbar">
                     <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_authenticated() %}
+                        <li><a href="/logout">Log out</a></li>
+                    {% else %}
+                        <li><a id="log-in" href="#">Log in</a></li>
+                    {% endif %}
                         <li><a href="/team">Team</a></li>
                     </ul>
                 <div>
             </nav>
         </div>
         {% block body %}{% endblock %}
+
+        {% if not current_user.is_authenticated() %}
+        <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+            api_key: 75l6c5puk0y9n2
+        </script>
+        <form method="post" action="{{ url_for('login_post') }}" id="login-form">
+            <input type="hidden" name="linkedin_oauth_token" value="(none)">
+        </form>
+        {% endif %}
     </body>
 </html>
 
