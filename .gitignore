@@ -42,7 +42,7 @@ nosetests.xml
 .elasticbeanstalk/
 
 # Logs
-logs/ozaur.log*
+logs/*.log*
 
 # Mac
 .DS_Store
