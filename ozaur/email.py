@@ -117,7 +117,7 @@ class Sender(object):
       purpose = "verify")
 
     db.session.add(email) 
-    if self._send_email(user, "Join the Ozaur! (meaningful email/earn bitcon on each email)", """
+    if self._send_email(user, "Join the Ozaur! Buy and sell attention using bitcoins.", """
 Welcome %(name)s!
 
 You're about to join revolution!
@@ -137,8 +137,41 @@ Hash: %(hash)s (please don't remove it)
       db.session.rollback()
 
   def send_welcome_email(self, user):
-    self._send_email(user, "Welcome the awesome human!", """TODO: explain how Ozaur works""")
+    self._send_email(user, "Welcome the awesome human!", """
+      Thanks again joining Ozaur! Let me explain quickly, how it all works: 
+      1. Your profile on Ozaur has just been created using your LinkedIn data. 
+      We do not display any of your contact info. To edit profile you can:
+      - change information on LinkedIn;
+      - add additional paragraph on your Ozaur profile ("Interested in");
+      2. Now you can go ahead and browse the others profiles.
+       On each profile you will see, how much bitcoins people are willing to pay for this user attention. 
+      3. Interested in somebody's attention and want to bid? 
+      First you need to have this amount of bitcoins on your account. Simply: ("TODO: Jacek!!!!!!")
+      4. Simply type how much you want to pay for user attention. 
+      5. Now this amount of bitcoins is freezed on your account. It means, that you can not use it, until auction is solved.
+      It is solved every week on Tuesday at 2pm PST. 
+      6. If you bidded with the biggest amount of bitcoins - you are the winner! Go ahead and send an email to this user via Ozaur. 
+      7. User whose attention you won has 48 hours to respond to you. Done the job? You are charged. Not responded? Monay are active again on your account.
+      8. Remember - people will be bidding on your profile as well! When got weekly email from winner, try to respond nicely and withing 48 hours. 
+      Therefore bitcoins will land on your account:)
+
+    Questions? Ask us anything using this email.
+
+    Enjoy!
+
+    Your truly, 
+    Ozaur 
+      """)
     pass
  
 
 process_incoming_email = Responder(Sender()).process_email
+
+
+
+
+
+
+
+
+
