@@ -1,5 +1,6 @@
-from flask import render_template, request
+from flask import render_template, request, url_for, redirect
 from sqlalchemy.exc import IntegrityError
+from flask.ext.login import LoginManager, login_required, login_user, logout_user, current_user
 import json
 import requests
 
@@ -8,6 +9,14 @@ from database import db, User, Profile
 from main import app
 from ozaur.email import Sender, process_incoming_email
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.filter(User.id == userid).first()
+
+
 @app.route("/")
 def main_page():
   return render_template("index.html")
@@ -15,6 +24,12 @@ def main_page():
 @app.route("/signup")
 def signup():
   return render_template("signup.html")
+
+@app.route("/logout")
+@login_required
+def logout():
+  logout_user()
+  return redirect(url_for("main_page"))
 
 @app.route("/team")
 def team():
@@ -64,18 +79,25 @@ def create_account():
 
   try:
     db.session.commit()
+
+    sender = Sender()
+    sender.send_invitation_email(user)
   except IntegrityError, e:
     db.session.rollback()
     user = User.query.filter(User.email == user_json["emailAddress"]).first()
-    # TODO: Change when we will have more profiles per user
-    profile = user.profiles[0]
 
+  login_user(user)
+
+  return redirect(url_for("my_profile"))
+
+@app.route("/my_profile")
+@login_required
+def my_profile():
+  # TODO: Change when we will have more profiles per user
+  profile = current_user.profiles[0]
   linkedin = json.loads(profile.data_json)
+  return render_template("profile.html", user = current_user, linkedin = linkedin)
 
-  sender = Sender()
-  sender.send_invitation_email(user)
-
-  return render_template("profile.html", user = user, linkedin = linkedin)
 
 # AJAX API
 @app.route("/account/<int:user_id>/interested_in", methods=["POST"])

@@ -4,6 +4,8 @@ DB_URL = os.environ.get("OZAUR_DB_URL", "(db url)")
 DB_DEBUG_ECHO = os.environ.get("OZAUR_DB_DEBUG", "false").lower() == "true"
 APP_DEBUG = os.environ.get("OZAUR_APP_DEBUG", "false").lower() == "true"
 
+SECRET_KEY = os.environ.get("OZAUR_APP_DEBUG", "5f627d297474ec984dfab25b763485ae")
+
 MAILGUN_API_KEY = os.environ.get("OZAUR_MAILGUN_API_KEY", "(none)")
 MAILGUN_DOMAIN = os.environ.get("OZAUR_MAILGUN_DOMAIN", "(none)")
 
