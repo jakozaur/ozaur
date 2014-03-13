@@ -1,116 +1,90 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Sign up to Ozaur</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" charset="utf-8">
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/static/js/application.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>    </head>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="/static/ozaur_logo.ico" />
-  </head>
-  <body>
-      <nav class="navbar" role="navigation">
-        <a href="/" class="navbar-brand">Ozaur</a>
-            <div id="upper-navbar">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="/team">Team</a></li>
-              </ul>
-            <div>
-        </nav>
-    <div class="row rules">
-      <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-5 col-lg-2 col-lg-offset-5">
-        <h1>The rules</h1>
-      </div>
-    </div>
-    <div class="row terms">
-      <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-6 col-lg-offset-3">
-        <p>These rules govern your use of this website; by using this website, you accept these terms and conditions in full. If you disagree with these terms and conditions or any part of these terms and conditions, you must not use this website.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-        <ol>
-          <li>You give us right to copy your LinkedIn profile data and store it.</li>
-          <li>We make sure, that all of these data are stored safely, using the highest security standards.</li>
-          <li>You have copywright to the content of your profile.</li>
-          <li>Ozaur will not share any of your contact information with the other users.</li>
-          <li>Every message will be send via Ozaur, not directly to the users.</li>
-          <li>You must be at least 18 years old to set up your account and use Ozaur.</li>
-          <li>Ozaur only uses bitcoins as a way of making payments and receiving payments.</li>
-          <li>You agree that while bidding on another users profiles, your bitcoins will be "freezed" what means, that you can not use them, until auction is over.</li>
-          <li>Auctions at every users profiles are solved once a week.</li>
-          <li>When you win auction, you have 48 hours to write an email to the person, whose attention you are about to buy.</li>
-          <li>You will submit such an email via mailing our service directly.</li>
-          <li>If you do not receive response within 48 hourse form moment of sending us such an email, you will nit be chaged.</li>
-          <li>If you receive answer, which will be: empty, will be harrasing you or will be unproper in any other way - you will also not be charged.</li>
-          <li>Ozar is final decision maker, while assessing response correctness.</li>
-          <li>If you receive propoer answer, you will be charged.</li>
-          <li>While somebody bid on your profile and win, you have 48 hours to respond for this person email.</li>
-          <li>If you will nor respond for this email, respond in a rude or unapriopriate way, you will not receive bitcoins as a payment for your attention.</li>
-          <li>If you respond for an email in proper way, you will receive bitcoins within next 24 hours</li>
-        </ol>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-8 col-xs-offset-3 col-sm-6 col-sm-offset-5 col-md-4 col-md-offset-3 col-lg-4 col-lg-offset-5">
-        <form>
-          <input id="sign-up-agree-checkbox" type="checkbox" />
-          <label for="agree-checkbox"> I agree with the rules</label>
-        </form>
-        <button id="sign-up-button" class="btn btn-default">Sign up with LinkedIn
-          <img src="static/images/signup_linkedin.png">
-        </button>
+{% extends 'base.html' %}
+{% block title %}Sign up to Ozaur{% endblock %}
+{% block body %}
+<div class="row rules">
+  <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-5 col-lg-2 col-lg-offset-5">
+    <h1>The rules</h1>
+  </div>
+</div>
+<div class="row terms">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-6 col-lg-offset-3">
+    <p>These rules govern your use of this website; by using this website, you accept these terms and conditions in full. If you disagree with these terms and conditions or any part of these terms and conditions, you must not use this website.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+    <ol>
+      <li>You give us right to copy your LinkedIn profile data and store it.</li>
+      <li>We make sure, that all of these data are stored safely, using the highest security standards.</li>
+      <li>You have copywright to the content of your profile.</li>
+      <li>Ozaur will not share any of your contact information with the other users.</li>
+      <li>Every message will be send via Ozaur, not directly to the users.</li>
+      <li>You must be at least 18 years old to set up your account and use Ozaur.</li>
+      <li>Ozaur only uses bitcoins as a way of making payments and receiving payments.</li>
+      <li>You agree that while bidding on another users profiles, your bitcoins will be "freezed" what means, that you can not use them, until auction is over.</li>
+      <li>Auctions at every users profiles are solved once a week.</li>
+      <li>When you win auction, you have 48 hours to write an email to the person, whose attention you are about to buy.</li>
+      <li>You will submit such an email via mailing our service directly.</li>
+      <li>If you do not receive response within 48 hourse form moment of sending us such an email, you will nit be chaged.</li>
+      <li>If you receive answer, which will be: empty, will be harrasing you or will be unproper in any other way - you will also not be charged.</li>
+      <li>Ozar is final decision maker, while assessing response correctness.</li>
+      <li>If you receive propoer answer, you will be charged.</li>
+      <li>While somebody bid on your profile and win, you have 48 hours to respond for this person email.</li>
+      <li>If you will nor respond for this email, respond in a rude or unapriopriate way, you will not receive bitcoins as a payment for your attention.</li>
+      <li>If you respond for an email in proper way, you will receive bitcoins within next 24 hours</li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-3 col-sm-6 col-sm-offset-5 col-md-4 col-md-offset-3 col-lg-4 col-lg-offset-5">
+    <form>
+      <input id="sign-up-agree-checkbox" type="checkbox" />
+      <label for="agree-checkbox"> I agree with the rules</label>
+    </form>
+    <button id="sign-up-button" class="btn btn-default">Sign up with LinkedIn
+      <img src="static/images/signup_linkedin.png">
+    </button>
 
-      </div>
-    </div>
+  </div>
+</div>
 
-    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
-        api_key: 75l6c5puk0y9n2
-        onLoad: LinkedIn.onLoad
-    </script>
-    <script type="text/javascript">
-      var LinkedIn = {
-        onLoad: function() {
-          IN.Event.on(IN, "auth", LinkedIn.onAuth);
-          $("#sign-up-button").click(function() {
-            if ($("#sign-up-agree-checkbox").prop("checked")) {
-              console.log("Clicked sign up buton... authorize with LinkedIN");
-              IN.User.authorize(function() {});
-            } else {
-              console.log("Clicked sign up buton... agree check box is missing");
-              alert("You need to agree with terms by checking the box first.")
-            }
-          });
-        },
-
-        onAuth: function() {
-          // Pass OAuth token to backend, which will fetch profile and create an account.
-          $("#signup_form input").val(IN.ENV.auth.oauth_token);
-          $("#signup_form").submit();
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+    api_key: 75l6c5puk0y9n2
+    onLoad: LinkedIn.onLoad
+</script>
+<script type="text/javascript">
+  var LinkedIn = {
+    onLoad: function() {
+      IN.Event.on(IN, "auth", LinkedIn.onAuth);
+      $("#sign-up-button").click(function() {
+        if ($("#sign-up-agree-checkbox").prop("checked")) {
+          console.log("Clicked sign up buton... authorize with LinkedIN");
+          IN.User.authorize(function() {});
+        } else {
+          console.log("Clicked sign up buton... agree check box is missing");
+          alert("You need to agree with terms by checking the box first.")
         }
-      };
+      });
+    },
 
-    </script>
+    onAuth: function() {
+      // Pass OAuth token to backend, which will fetch profile and create an account.
+      $("#signup_form input").val(IN.ENV.auth.oauth_token);
+      $("#signup_form").submit();
+    }
+  };
+
+</script>
 
 <!--
-    <script type="in/Login">
-      Hello!
-    </script>
+<script type="in/Login">
+  Hello!
+</script>
 -->
 
-    <a href="/"></a>
-    <form method="post" action="{{ url_for('create_account') }}" id="signup_form">
-      <input type="hidden" name="linkedin_oauth_token" value="(none)">
-    </form>
-
-  </body>
-</html>
+<a href="/"></a>
+<form method="post" action="{{ url_for('create_account') }}" id="signup_form">
+  <input type="hidden" name="linkedin_oauth_token" value="(none)">
+</form>
+{% endblock %}
 

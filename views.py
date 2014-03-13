@@ -100,10 +100,10 @@ def my_profile():
 
 
 # AJAX API
-@app.route("/account/<int:user_id>/interested_in", methods=["POST"])
-def save_interested_in(user_id):
-  user = User.query.filter(User.id == user_id).first()
-  user.interested_in = request.form["interested_in"]
+@app.route("/my_profile/interested_in", methods=["POST"])
+@login_required
+def save_interested_in():
+  current_user.interested_in = request.form["interested_in"]
   db.session.commit()
   return "OK"
 
