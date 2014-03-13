@@ -9,14 +9,16 @@
 
 {% for user in pagination.items %}
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+        <div class="col-lg-7 col-lg-offset-4">
             <button class="btn btn-default profile">
                 <h2><a href="{{ url_for('public_profile', id=user.id) }}">{{ user.display_name }}</h2>
                 <img src="{{ user.photo_url }}">
-                <p class="about">{{ user.headline }}</p>
-                <p class="about">{{ user.industry }}</p>
-                <p class="about">{{ user.location }}</p>
-                <p class="about">Interests: {{ user.interested_in }}</p></a>
+                <div class="short-desc">
+                    <p class="about">{{ user.headline }}</p>
+                    <p class="about">{{ user.industry }}</p>
+                    <p class="about">{{ user.location }}</p>
+                    <p class="about">Interests: {{ user.interested_in }}</p></a>
+                </div>
             </button>
         </div>
     </div>
@@ -24,7 +26,7 @@
 {% endfor %}
 
 <div class="row">
-    <div class="col-xs-4 col-xs-offset-5 col-sm-2 col-sm-offset-5 col-md-1 col-md-offset-5 col-lg-1 col-lg-offset-5 pages">
+    <div class="col-xs-4 col-xs-offset-5 col-sm-2 col-sm-offset-5 col-md-1 col-md-offset-5 col-lg-1 col-lg-offset-3 pages">
         <span class="about">Pages:</span>
         <div class="pagination">
           {% for page in pagination.iter_pages() %}

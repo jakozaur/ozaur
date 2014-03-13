@@ -58,9 +58,10 @@
                         {% else %}
                             current
                         {% endif %} </h4>
-                    <p class="about">{% for line in position["summary"].splitlines() %}
-                            {{line}} <br>
+                    <p class="about">{% if "summary" in position %}{% for line in position["summary"].splitlines() %}
+                        {{ line }} <br>
                         {% endfor %}
+                        {% endif %}
                     </p>
                 </div>
             {% endfor %}

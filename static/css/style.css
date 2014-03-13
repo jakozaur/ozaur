@@ -36,7 +36,8 @@ nav a {
 .navbar .nav a:hover {
     text-decoration: none;
     font-weight: normal;
-    background-color: #5ba485;
+    background-color: #739172;
+    border-radius: 7px;
 }
 
 .navbar-brand {
@@ -245,17 +246,17 @@ button.save:hover {
 
 
 button.profile {
-    padding: 20px;
+    padding: 15px 40px;
     border: 1px solid black;
-    max-width: 430px;
 }
 
-@media (max-width: 535px) {
-    button.profile {
-        max-width: 300px;
-    }
+.profile .short-desc {
+    float: left;
 }
 
+.profile img {
+    float: left;
+}
 
 button img {
     margin: 13px;
