@@ -35,7 +35,6 @@ nav a {
 
 .navbar .nav a:hover {
     text-decoration: none;
-    font-weight: normal;
     background-color: #739172;
     border-radius: 7px;
 }

@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, flash
 from sqlalchemy.exc import IntegrityError
 from flask.ext.login import LoginManager, login_required, login_user, logout_user, current_user
 import json
@@ -32,12 +32,14 @@ def login_post():
         "x-li-format": "json"})
 
   user = User.query.filter(User.email == r.json()["values"][0]["emailAddress"]).first()
+  flash("You have log in. Welcome aboard! Who are you going to bid today?")
   login_user(user)
   return redirect(url_for("main_page"))
 
 @app.route("/logout")
 @login_required
 def logout():
+  flash("You have loged out successfully. Bye bye.")
   logout_user()
   return redirect(url_for("main_page"))
 
