@@ -244,19 +244,6 @@ button.save:hover {
 }
 
 
-button.profile {
-    padding: 15px 40px;
-    border: 1px solid black;
-}
-
-.profile .short-desc {
-    float: left;
-}
-
-.profile img {
-    float: left;
-}
-
 button img {
     margin: 13px;
     border-radius: 4px;
@@ -287,7 +274,35 @@ button h2 a:hover {
     margin-bottom: 16px;
 }
 
+.single-profile img {
+    float: left;
+    margin-top: 10px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+}
 
+.single-profile a p {
+    color: black;
+}
+
+.single-profile a h2 {
+    color: black;
+    margin-bottom: 15px;
+}
+
+.single-profile a:hover {
+    text-decoration: none;
+}
+
+.single-profile {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 25px;
+}
+
+.single-profile:hover {
+    border: 2px solid #D8D8D8;
+}
 
 
 
