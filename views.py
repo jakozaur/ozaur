@@ -61,7 +61,7 @@ def public_profile(id):
 
   linkedin = json.loads(profile.data_json)
 
-  return render_template("profile.html", user=user, linkedin=linkedin)
+  return render_template("bid_profile.html", user=user, linkedin=linkedin)
 
 @app.route("/create_account", methods=["POST"])
 def create_account():
@@ -108,7 +108,7 @@ def my_profile():
   # TODO: Change when we will have more profiles per user
   profile = current_user.profiles[0]
   linkedin = json.loads(profile.data_json)
-  return render_template("profile.html", user = current_user, linkedin = linkedin)
+  return render_template("my_profile.html", user = current_user, linkedin = linkedin)
 
 
 # AJAX API
@@ -136,5 +136,6 @@ def mailgun_notification():
   return "OK"
 
 if __name__ == "__main__":
+    print "Gosia our site is running!"
     app.run(debug=config.APP_DEBUG)
 

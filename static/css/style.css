@@ -310,7 +310,9 @@ button h2 a:hover {
     border: 2px solid #D8D8D8;
 }
 
-
+#attention-bid {
+    text-align: right;
+}
 
 
 
