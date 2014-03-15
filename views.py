@@ -56,12 +56,28 @@ def profiles(page):
 @app.route("/profile/<int:id>")
 def public_profile(id):
   user = User.query.filter(User.id == id).first()
-  # TODO: Change when we will have more profiles per user
-  profile = user.profiles[0]
+  if user:
+    # TODO: Change when we will have more profiles per user
+    profile = user.profiles[0]
 
-  linkedin = json.loads(profile.data_json)
+    linkedin = json.loads(profile.data_json)
 
-  return render_template("bid_profile.html", user=user, linkedin=linkedin)
+    return render_template("bid_profile.html", user=user, linkedin=linkedin)
+  else:
+    flash("Given user profile does not exist.")
+    return redirect(url_for("profiles"))
+
+@app.route("/profile/<int:id>/bid", methods=["POST"])
+@login_required
+def bid_profile(id):
+  user = User.query.filter(User.id == id).first()
+  if user:
+    # TODO: implement
+    return "Some sort of confirmation"
+  else:
+    flash("Given user profile does not longer exist.")
+    return redirect(url_for("profiles"))
+
 
 @app.route("/create_account", methods=["POST"])
 def create_account():
