@@ -8,7 +8,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 from main import app
 import config
-from hasher import random_address_hash, random_email_hash
+from ozaur.hasher import random_address_hash, random_email_hash
 
 app.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URL
 app.config["SQLALCHEMY_ECHO"] = config.DB_DEBUG_ECHO

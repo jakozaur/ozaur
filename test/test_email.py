@@ -8,6 +8,7 @@ from mock import Mock
 from database import create_schema, delete_schema, db, Email, User, EmailArchive
 from ozaur.email import Responder, Sender
 
+
 class TestResponder(unittest.TestCase):
   def setUp(self):
     create_schema()

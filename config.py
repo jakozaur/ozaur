@@ -9,6 +9,8 @@ SECRET_KEY = os.environ.get("OZAUR_APP_DEBUG", "5f627d297474ec984dfab25b763485ae
 MAILGUN_API_KEY = os.environ.get("OZAUR_MAILGUN_API_KEY", "(none)")
 MAILGUN_DOMAIN = os.environ.get("OZAUR_MAILGUN_DOMAIN", "(none)")
 
+MAX_BID_SATOSHI = 10 ** 7 # 0.1 Bitcoin
+
 
 # For AWS Beanstalk
 if "RDS_HOSTNAME" in os.environ:
@@ -18,5 +20,8 @@ if "RDS_HOSTNAME" in os.environ:
       os.environ['RDS_HOSTNAME'],
       os.environ['RDS_PORT'],
       os.environ['RDS_DB_NAME'])
+
+# Constants
+SATOSHI_IN_MICRO = 100
 
 

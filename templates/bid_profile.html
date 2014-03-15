@@ -33,7 +33,7 @@
         {% if current_user.is_authenticated() %}
             <form action="/profile/{{ user.id }}/bid" method="POST">
                 <label for="attention-bid">I am willing to pay</label>
-                <input id="attention-bid" name="attention-bid" type="number" min="1" step="1" value="100">
+                <input id="attention-bid" name="attention-bid" type="number" min="1" step="1" value="100" max="{{ max_bid }}">
                 <label for="attention-bid"><abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> for your email response.</label>
                 <br>
                 <input class="btn btn-success" type="submit" value="Bid">

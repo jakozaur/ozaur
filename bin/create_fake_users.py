@@ -1,5 +1,5 @@
 from database import db, User, Profile
-from hasher import random_address_hash
+from ozaur.hasher import random_address_hash
 
 NAMES = ["Adam Smith",
   "John the Ripper",

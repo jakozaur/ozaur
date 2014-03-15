@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from flask import render_template, request, url_for, redirect, flash
 from sqlalchemy.exc import IntegrityError
 from flask.ext.login import LoginManager, login_required, login_user, logout_user, current_user
@@ -8,6 +10,7 @@ import config
 from database import db, User, Profile
 from main import app
 from ozaur.email import Sender, process_incoming_email
+from ozaur.trader import trader
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -62,7 +65,8 @@ def public_profile(id):
 
     linkedin = json.loads(profile.data_json)
 
-    return render_template("bid_profile.html", user=user, linkedin=linkedin)
+    return render_template("bid_profile.html", user=user, linkedin=linkedin,
+        max_bid=config.MAX_BID_SATOSHI / config.SATOSHI_IN_MICRO)
   else:
     flash("Given user profile does not exist.")
     return redirect(url_for("profiles"))
@@ -71,13 +75,32 @@ def public_profile(id):
 @login_required
 def bid_profile(id):
   user = User.query.filter(User.id == id).first()
-  if user:
-    # TODO: implement
-    return "Some sort of confirmation"
-  else:
+  if not user:
     flash("Given user profile does not longer exist.")
     return redirect(url_for("profiles"))
 
+  if "attention-bid" not in request.form or \
+      not request.form["attention-bid"].isdigit() or \
+      int(request.form["attention-bid"]) == 0:
+    flash("Your bid value has invalid format!")
+    return redirect(url_for("public_profile", id=id))
+
+  # Micro (10^-6 to satoshi 10^-8)
+  value_micro = int(request.form["attention-bid"])
+  value_satoshi = value_micro * config.SATOSHI_IN_MICRO
+
+  if value_satoshi > config.MAX_BID_SATOSHI:
+    flash(u"Your bid %d μBTC is over maximal value %d μBTC." %
+        (value_micro, config.MAX_BID_SATOSHI / config.SATOSHI_IN_MICRO))
+    return redirect(url_for("public_profile", id=id))
+
+  try:
+    trader.bid(current_user, user, value_satoshi)
+    flash(u"You have successfully bidded %s μBTC on '%s'." % (value_micro, user.display_name))
+  except:
+    flash(u"Your bid on '%s' was unsuccessful." % (user.display_name))
+
+  return redirect(url_for("public_profile", id=id))
 
 @app.route("/create_account", methods=["POST"])
 def create_account():
