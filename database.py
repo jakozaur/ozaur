@@ -19,6 +19,12 @@ class TimeMixin(object):
   created_at = Column(DateTime, default=datetime.utcnow)
   updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+class ValueMixin(object):
+  value_satoshi = Column(BigInteger, nullable=False)
+
+  def value_micro(self):
+    return self.value_satoshi / config.SATOSHI_IN_MICRO
+
 
 class User(db.Model, UserMixin, TimeMixin):
   __tablename__ = "user"
@@ -52,25 +58,21 @@ class Profile(db.Model, TimeMixin):
   __table_args__ = (Index("profile_user_id_idx", "user_id"),)
 
 
-class Bid(db.Model, TimeMixin):
+class Bid(db.Model, ValueMixin, TimeMixin):
   __tablename__ = "bid"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
   buyer_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
   seller_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-  value_satoshi = Column(BigInteger, nullable=False)
   coinbase_order = Column(String(64), nullable=False)
 
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_bid")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_bid")
 
-  def value_micro(self):
-    return self.value_satoshi / config.SATOSHI_IN_MICRO
-
   __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
 
 
-class Transaction(db.Model, TimeMixin):
+class Transaction(db.Model, ValueMixin, TimeMixin):
   __tablename__ = "transaction"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
@@ -78,7 +80,6 @@ class Transaction(db.Model, TimeMixin):
   bid_created_at = Column(DateTime, nullable=False)
   buyer_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
   seller_user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-  value_satoshi = Column(BigInteger, nullable=False)
   coinbase_order = Column(String(64), nullable=False)
   status = Column(Enum("wait_for_question", "wait_for_answer", "success", "timeout_on_question", "timeout_on_answer",
     name="transaction_status_type"), nullable=False)
@@ -89,13 +90,12 @@ class Transaction(db.Model, TimeMixin):
   __table_args__ = (Index("transaction_buyer_user_id_idx", "buyer_user_id"), Index("transaction_seller_user_id_idx", "seller_user_id"),)
 
 
-class Payout(db.Model, TimeMixin):
+class Payout(db.Model, ValueMixin, TimeMixin):
   __tablename__ = "payout"
 
   id = Column(Integer, primary_key=True, autoincrement=True)
   transaction_id = Column(Integer, ForeignKey("transaction.id"), nullable=False)
   user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-  value_satoshi = Column(BigInteger, nullable=False)
   paid_date = Column(DateTime)
   is_paid = Column(Boolean, nullable=False, default=True)
 

@@ -56,6 +56,8 @@ python views.py
 # Nice to have
 
 1. Just show top N bds
+2. Show names of people you bid on.
+3. Reimport LinkedIn.
 
 # Useful tools
 http://postgresapp.com/

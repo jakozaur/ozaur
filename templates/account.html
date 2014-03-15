@@ -33,13 +33,21 @@
 </div>
 <div class="row">
   <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
-    <h2>Active payouts</h2>
-    <p>Due to <span title="USA banks take few...">security reasons</span> payouts may take up to 2 working days.</p>
-    <p>TODO</p>
+    <h2>Outstanding payouts</h2>
+    <p>Due to <span title="USA bank transfers take few days... so this side-project has similar delays ;). For initial version we decided prioritize security over anything else (including this delay).">security reasons</span> payouts may take up to 2 working days.</p>
+    {% if payouts %}
+    <ul>
+      {% for payout in payouts %}
+      <li>{{ payout.value_micro() }} <abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> waiting since <span class="moment-date">{{ payout.created_at }}</span></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No payouts yet. Promote your profile and start earning bitcoins!</p>
+    {% endif %}
   </div>
   <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0">
     <h2>Your profile</h2>
-    <p>TODO</p>
+    <a class="btn btn-success" href="/my_profile">Edit interested in</a>
   </div>
 </div>
 <div class="row">

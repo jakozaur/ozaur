@@ -8,7 +8,7 @@ import json
 import requests
 
 import config
-from database import db, User, Profile, Bid
+from database import db, User, Profile, Bid, Payout
 from main import app
 from ozaur.email import Sender, process_incoming_email
 from ozaur.trader import trader
@@ -148,7 +148,8 @@ def create_account():
 @app.route("/account")
 @login_required
 def account():
-  return render_template("account.html")
+  payouts = Payout.query.filter(Payout.user_id == current_user.id, Payout.is_paid == False).all()
+  return render_template("account.html", payouts = payouts)
 
 @app.route("/my_profile")
 @login_required
