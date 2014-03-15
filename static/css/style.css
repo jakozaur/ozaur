@@ -54,6 +54,12 @@ nav button .icon-bar {
     margin-top: 8px;
 }
 
+@media (max-width: 767px) {
+    .navbar-brand {
+        margin-top: 3px;
+    }
+}
+
 .navbar-brand:hover {
     text-decoration: none;
     color: white;
