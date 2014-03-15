@@ -19,8 +19,15 @@
     <body>
         <div class="main">
             <nav class="navbar" role="navigation">
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#upper-navbar">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a href="/" class="navbar-brand">Ozaur</a>
-                <div id="upper-navbar">
+
+                <div class="collapse navbar-collapse" id="upper-navbar">
                     <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated() %}
                         <li><a href="/profiles">Browse profiles</a></li>

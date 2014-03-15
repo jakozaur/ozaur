@@ -16,8 +16,13 @@ nav {
 nav a {
     color: #5e5e5e;
     font-family: 'Gafata', sans-serif;
-    margin-top: 11px;
+    margin-top: 6px;
     margin-right: 50px;
+}
+
+nav button .icon-bar {
+    background-color: black;
+    margin-top: 6px;
 }
 
 
@@ -31,6 +36,7 @@ nav a {
 .navbar .nav a {
     font-size: 160%;
     color: white;
+    line-height: 30px;
 }
 
 .navbar .nav a:hover {
@@ -45,7 +51,7 @@ nav a {
     text-decoration: none;
     font-family: 'Gafata', sans-serif;
     margin-left: 20px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .navbar-brand:hover {
