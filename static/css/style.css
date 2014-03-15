@@ -126,7 +126,7 @@ span.pages {
 }
 
 p.about {
-    line-height: 25px;
+    line-height: 20px;
 }
 
 .pagination a {
@@ -302,9 +302,11 @@ button h2 a:hover {
 
 .single-profile img {
     float: left;
-    margin-top: 10px;
+    margin-top: 8px;
     margin-right: 25px;
     margin-bottom: 10px;
+    height: 100px;
+    width: 100px;
 }
 
 .single-profile a p {
@@ -313,7 +315,7 @@ button h2 a:hover {
 
 .single-profile a h2 {
     color: black;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     margin-top: -10px;
 }
 
@@ -336,7 +338,8 @@ button h2 a:hover {
     text-align: right;
 }
 
-
-
+#awesome {
+    margin-bottom: 5px;
+}
 
 
