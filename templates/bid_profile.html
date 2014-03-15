@@ -30,7 +30,7 @@
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h2>Bid on attention</h2>
-        {% if user.is_authenticated() %}
+        {% if current_user.is_authenticated() %}
             <form action="/profile/{{ user.id }}/bid" method="POST">
                 <label for="attention-bid">I am willing to pay</label>
                 <input id="attention-bid" name="attention-bid" type="number" min="1" step="1" value="100">
@@ -40,22 +40,25 @@
             </form>
             <!-- TODO: show some exiting orders -->
         {% else %}
-            <p>You need to create your profile first.</p>
+            <p>Would you mind creating your profile first? Or just log in ;).</p>
             <a href="{{ url_for('signup') }}" class="btn btn-default btn-lg active action-button" role="button">Join the revolution</a>
         {% endif %}
     </div>
 </div>
+
+{% if "summary" in linkedin  %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h2>Summary</h2>
         <p class="about">{{ linkedin["summary"] }}</p>
     </div>
 </div>
+{% endif %}
 
+{% if "positions" in linkedin and "values" in linkedin["positions"] %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h2>Jobs</h2>
-            {% if "positions" in linkedin and "values" in linkedin["positions"] %}
             {% for position in linkedin["positions"]["values"] %}
                 <div class="job">
                     <h3>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h3>
@@ -68,25 +71,25 @@
                     <p class="about">{{ position["summary"] }}</p>
                 </div>
             {% endfor %}
-            {% endif %}
     </div>
 </div>
+{% endif %}
 
+{% if "skills" in linkedin %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Skills</h3>
-        {% if "skills" in linkedin %}
         {% for skill in linkedin["skills"]["values"] %}
             <span>{{ skill["skill"]["name"] }},</span>
         {% endfor %}
-        {% endif %}
     </div>
 </div>
+{% endif %}
 
+{% if "educations" in linkedin %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Education</h3>
-        {% if "educations" in linkedin %}
         {% for education in linkedin["educations"]["values"] %}
             <div class="school">
                 <h4>{{ education["schoolName"] }}</h4>
@@ -96,17 +99,20 @@
                 <p class="about">{{ education["notes"] }}</p>
             </div>
         {% endfor %}
-        {% endif %}
     </div>
 <div>
+{% endif %}
 
+{% if "interests" in linkedin %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Interests</h3>
         <p class="about">{{ linkedin["interests"] }}</p>
     </div>
 </div>
+{% endif %}
 
+{% if "associations" in linkedin %}
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Associations</h3>
@@ -115,6 +121,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 
 

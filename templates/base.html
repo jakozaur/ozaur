@@ -54,7 +54,8 @@
             api_key: 75l6c5puk0y9n2
         </script>
         <form method="post" action="{{ url_for('login_post') }}" id="login-form">
-            <input type="hidden" name="linkedin_oauth_token" value="(none)">
+            <input type="hidden" name="back_url" value="{{request.url}}">
+            <input type="hidden" id="linkedin-oauth-token" name="linkedin_oauth_token" value="(none)">
         </form>
         {% endif %}
     </body>

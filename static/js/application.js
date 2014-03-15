@@ -29,7 +29,7 @@ $(function() {
     $("#log-in").click(function() {
          IN.User.authorize(function() {
             // Pass OAuth token to backend, which will log in account in backend.
-            $("#login-form input").val(IN.ENV.auth.oauth_token);
+            $("#linkedin-oauth-token").val(IN.ENV.auth.oauth_token);
             $("#login-form").submit();
         });
     })

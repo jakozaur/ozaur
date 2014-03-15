@@ -62,6 +62,8 @@
                     <p class="about">{{ position["summary"] }}</p>
                 </div>
             {% endfor %}
+            {% else %}
+                <p>Tell us your career story.</p>
             {% endif %}
     </div>
 </div>
@@ -69,10 +71,12 @@
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Skills</h3>
-        {% if "skills" in linkedin %}
+        {% if "skills" in linkedin and "values" in linkedin["skills"] %}
         {% for skill in linkedin["skills"]["values"] %}
             <span>{{ skill["skill"]["name"] }},</span>
         {% endfor %}
+        {% else %}
+            <p>You have not listed your skills. Mind sharing your talents?</p>
         {% endif %}
     </div>
 </div>
@@ -90,6 +94,8 @@
                 <p class="about">{{ education["notes"] }}</p>
             </div>
         {% endfor %}
+        {% else %}
+            <p>Tell us you story</p>
         {% endif %}
     </div>
 <div>

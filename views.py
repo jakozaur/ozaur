@@ -34,7 +34,7 @@ def login_post():
   user = User.query.filter(User.email == r.json()["values"][0]["emailAddress"]).first()
   flash("You have log in. Welcome aboard! Who are you going to bid today?")
   login_user(user)
-  return redirect(url_for("main_page"))
+  return redirect(request.form["back_url"])
 
 @app.route("/logout")
 @login_required
