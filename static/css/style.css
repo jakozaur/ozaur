@@ -345,6 +345,7 @@ button h2 a:hover {
 
 #awesome {
     margin-bottom: 5px;
+    margin-top: -35px;
 }
 
 .bid {
@@ -361,8 +362,10 @@ button h2 a:hover {
     margin-top: 20px;
 }
 
-.bid-button {
-    margin-top: 20px;
+@media (max-width: 655px) {
+    .bid-button {
+        margin-top: 20px;
+    }
 }
 
 input {
@@ -372,8 +375,18 @@ input {
     border-radius: 6px;
 }
 
+.bid-list {
+    margin-top: 35px;
+}
 
 
+.our-value {
+    background-color: #ABB2B3;
+}
+
+#header-text {
+    padding-bottom: 55px;
+}
 
 
 

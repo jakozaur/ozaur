@@ -42,6 +42,7 @@
             <p>Would you mind creating your profile first? Or just log in ;).</p>
             <a href="{{ url_for('signup') }}" class="btn btn-default btn-lg active action-button" role="button">Join the revolution</a>
         {% endif %}
+<div class="bid-list">
         {% if bids %}
             <h2>Top bids</h2>
             <ul>
@@ -52,6 +53,7 @@
             {% endfor %}
             </ul>
         {% endif %}
+    </div>
     </div>
 </div>
 
