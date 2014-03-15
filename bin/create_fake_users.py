@@ -89,12 +89,13 @@ FACES = [
 "https://s3.amazonaws.com/uifaces/faces/twitter/terryxlife/128.jpg"
 ]
 
-for i, name in enumerate(NAMES):
-  email = name.lower().replace(" ", ".") + "@example.com"
-  face = FACES[i]
-  user = User(email = email, active = True, display_name = name, photo_url = face)
-  profile = Profile(external_key = random_address_hash(), data_json = "{}")
-  user.profiles.append(profile)
-  db.session.add(user)
-  db.session.commit()
-  print "Added %s" % (name)
+for j in "abcdefghijklmnoprst":
+  for i, name in enumerate(NAMES):
+    email = name.lower().replace(" ", ".") + (".%s@example.com" % (j))
+    face = FACES[i]
+    user = User(email = email, active = True, display_name = name, photo_url = face)
+    profile = Profile(external_key = random_address_hash(), data_json = "{}")
+    user.profiles.append(profile)
+    db.session.add(user)
+    db.session.commit()
+    print "Added %s" % (name)

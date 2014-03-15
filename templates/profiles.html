@@ -28,13 +28,13 @@
 {% endfor %}
 
 <div class="row">
-    <div class="col-xs-4 col-xs-offset-4 col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-4 col-lg-1 col-lg-offset-4 pages">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">
         <span class="about">Pages:</span>
         <div class="pagination">
           {% for page in pagination.iter_pages() %}
             {% if page %}
               {% if page != pagination.page %}
-                <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                <a href="{{ url_for("profiles", page=page) }}">{{ page }}</a>
               {% else %}
                 <strong>{{ page }}</strong>
               {% endif %}
