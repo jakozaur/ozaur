@@ -53,6 +53,10 @@ git pull --rebase
 
 python views.py
 
+# Nice to have
+
+1. Just show top N bds
+
 # Useful tools
 http://postgresapp.com/
 

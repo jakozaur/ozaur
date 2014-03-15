@@ -145,6 +145,11 @@ def create_account():
 
   return redirect(url_for("my_profile"))
 
+@app.route("/account")
+@login_required
+def account():
+  return render_template("account.html")
+
 @app.route("/my_profile")
 @login_required
 def my_profile():

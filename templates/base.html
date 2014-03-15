@@ -30,8 +30,9 @@
 
                 <div class="collapse navbar-collapse" id="upper-navbar">
                     <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_authenticated() %}
                         <li><a id="browse" href="/profiles">Browse profiles</a></li>
+                    {% if current_user.is_authenticated() %}
+                        <li><a href="/account">My account</a></li>
                         <li><a href="/logout">Log out</a></li>
                     {% else %}
                         <li><a id="log-in" href="#">Log in</a></li>

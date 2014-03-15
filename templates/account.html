@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}My account{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+    <h2>My bids</h2>
+    {% if current_user.buyer_bid %}
+    <ul>
+      {% for bid in current_user.buyer_bid %}
+      <li>{{ bid.value_micro() }} <abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> placed on
+        <span class="moment-date">{{ bid.created_at }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no bids... Maybe you would like to <a href="/profiles">email someone</a>.</p>
+    {% endif %}
+  </div>
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0">
+    <h2>Bids on me</h2>
+    {% if current_user.seller_bid %}
+    <ul>
+      {% for bid in current_user.seller_bid %}
+      <li>{{ bid.value_micro() }} <abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> placed on
+        <span class="moment-date">{{ bid.created_at }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No one wants your attention, really? Go spread the word about your profile. (TODO: Twitter/Facebook)</p>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+    <h2>Active payouts</h2>
+    <p>Due to <span title="USA banks take few...">security reasons</span> payouts may take up to 2 working days.</p>
+    <p>TODO</p>
+  </div>
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0">
+    <h2>Your profile</h2>
+    <p>TODO</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+    <h2>Your email archive</h2>
+    <p>Just go to your email account and find them (e.g. from:*@ozaur.com). We do not store your messages.</p>
+    <p>Strong privacy delivered.</p>
+  </div>
+</div>
+{% endblock %}
