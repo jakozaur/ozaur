@@ -125,7 +125,7 @@ span.pages {
     font-size: 20px; 
 }
 
-p.about {
+.new-user {
     line-height: 20px;
 }
 
@@ -340,10 +340,41 @@ button h2 a:hover {
 
 #attention-bid {
     text-align: right;
+    line-height: 23px;
 }
 
 #awesome {
     margin-bottom: 5px;
 }
+
+.bid {
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+#bid-me {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.user-header {
+    margin-top: 20px;
+}
+
+.bid-button {
+    margin-top: 20px;
+}
+
+input {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+    border-radius: 6px;
+}
+
+
+
+
+
 
 

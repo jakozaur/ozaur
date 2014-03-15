@@ -4,39 +4,38 @@
 {% set num_to_month = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June",
     7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"} %}
 
-<div class="row">
+<div class="row user-header">
     <div class="row">
-        <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-4 col-sm-6 col-md-4 col-lg-4">
             <div class="row">
-                <div class="col-xs-6 col-xs-offset-4 col-sm-2 col-sm-offset-6 col-md-1 col-md-offset-8 col-lg-1 col-lg-offset-8">
+                <div class="col-xs-6 col-xs-offset-4 col-sm-2 col-sm-offset-6 col-md-2 col-md-offset-10 col-lg-1 col-lg-offset-10">
                     <img class="user-portrait" src="{{ user.photo_url }}">
                 </div>
             </div>
         </div>
-        <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+        <div class="col-xs-8 col-sm-6 col-md-8 col-lg-8">
             <div class="row">
-                <div class="col-xs-8 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-8 col-sm-6 col-md-10 col-md-offset-2 col-lg-6 col-lg-offset-1">
                     <h2>{{ user.display_name }}</h2>
-                    <p>{{ user.interested_in }}</p>
                     <p>{{ user.headline }}</p>
                     <p>{{ user.location }}</p>
                     <p>{{ user.industry }}</p>
-                    <p>
+                    <p>{{ user.interested_in }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-8 col-md-offset-3 col-lg-6 col-lg-offset-3 bid">
         <h2>Bid on attention</h2>
         {% if current_user.is_authenticated() %}
             <form action="/profile/{{ user.id }}/bid" method="POST">
-                <label for="attention-bid">I am willing to pay</label>
+                <label id="bid-me" for="attention-bid">I am willing to pay </label>
                 <input id="attention-bid" name="attention-bid" type="number" min="1" step="1" value="100" max="{{ max_bid }}">
                 <label for="attention-bid"><abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> for your email response.</label>
                 <br>
-                <input class="btn btn-success" type="submit" value="Bid">
+                <input class="btn btn-success btn-lg bid-button" type="submit" value="Bid">
             </form>
             <!-- TODO: show some exiting orders -->
         {% else %}
