@@ -32,5 +32,9 @@ $(function() {
             $("#linkedin-oauth-token").val(IN.ENV.auth.oauth_token);
             $("#login-form").submit();
         });
-    })
+    });
+
+    $(".moment-date").each(function(i, el) {
+        $(el).text(moment($(el).text() + " +0000").format("LLL"));
+    });
 });

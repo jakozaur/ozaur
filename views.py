@@ -1,13 +1,14 @@
 # coding=utf-8
 
 from flask import render_template, request, url_for, redirect, flash
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
 from flask.ext.login import LoginManager, login_required, login_user, logout_user, current_user
 import json
 import requests
 
 import config
-from database import db, User, Profile
+from database import db, User, Profile, Bid
 from main import app
 from ozaur.email import Sender, process_incoming_email
 from ozaur.trader import trader
@@ -63,9 +64,12 @@ def public_profile(id):
     # TODO: Change when we will have more profiles per user
     profile = user.profiles[0]
 
+    bids = Bid.query.filter(Bid.seller_user_id == id).order_by(desc(Bid.value_satoshi)).all()
+
     linkedin = json.loads(profile.data_json)
 
     return render_template("bid_profile.html", user=user, linkedin=linkedin,
+        bids=bids,
         max_bid=config.MAX_BID_SATOSHI / config.SATOSHI_IN_MICRO)
   else:
     flash("Given user profile does not exist.")

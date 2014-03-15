@@ -64,6 +64,9 @@ class Bid(db.Model, TimeMixin):
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_bid")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_bid")
 
+  def value_micro(self):
+    return self.value_satoshi / config.SATOSHI_IN_MICRO
+
   __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
 
 

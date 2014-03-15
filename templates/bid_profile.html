@@ -43,6 +43,16 @@
             <p>Would you mind creating your profile first? Or just log in ;).</p>
             <a href="{{ url_for('signup') }}" class="btn btn-default btn-lg active action-button" role="button">Join the revolution</a>
         {% endif %}
+        {% if bids %}
+            <h2>Top bids</h2>
+            <ul>
+            {% for bid in bids %}
+                <li>{{ bid.value_micro() }} <abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> placed on
+                    <span class="moment-date">{{ bid.created_at }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 </div>
 
