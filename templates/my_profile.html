@@ -42,13 +42,14 @@
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h2>Summary</h2>
-        <p class="about">{% for line in linkedin["summary"].splitlines() %} {{line}}<br> {% endfor %}</p>
+        <p class="about">{{ linkedin["summary"] }}</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h2>Jobs</h2>
+            {% if "positions" in linkedin and "values" in linkedin["positions"] %}
             {% for position in linkedin["positions"]["values"] %}
                 <div class="job">
                     <h3>{{ position["title"] }} at {{ position["company"]["name"] }} ({{ position["company"]["industry"] }} {{ position["company"]["size"] }}) </h3>
@@ -58,28 +59,28 @@
                         {% else %}
                             current
                         {% endif %} </h4>
-                    <p class="about">{% if "summary" in position %}{% for line in position["summary"].splitlines() %}
-                        {{ line }} <br>
-                        {% endfor %}
-                        {% endif %}
-                    </p>
+                    <p class="about">{{ position["summary"] }}</p>
                 </div>
             {% endfor %}
+            {% endif %}
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Skills</h3>
+        {% if "skills" in linkedin %}
         {% for skill in linkedin["skills"]["values"] %}
             <span>{{ skill["skill"]["name"] }},</span>
         {% endfor %}
+        {% endif %}
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
         <h3>Education</h3>
+        {% if "educations" in linkedin %}
         {% for education in linkedin["educations"]["values"] %}
             <div class="school">
                 <h4>{{ education["schoolName"] }}</h4>
@@ -89,6 +90,7 @@
                 <p class="about">{{ education["notes"] }}</p>
             </div>
         {% endfor %}
+        {% endif %}
     </div>
 <div>
 

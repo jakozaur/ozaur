@@ -135,6 +135,10 @@ p.about {
     margin-left: 5px;
 }
 
+.about {
+    white-space: pre-line;
+}
+
 h2, h3, h4 {
     font-family: 'Raleway', sans-serif;
 }
