@@ -121,6 +121,16 @@ li, .about, span {
     line-height: 30px;
 }
 
+span.pages {
+    font-size: 20px; 
+}
+
+.pagination a {
+    font-size: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 h2, h3, h4 {
     font-family: 'Raleway', sans-serif;
 }
@@ -300,6 +310,7 @@ button h2 a:hover {
 .single-profile a h2 {
     color: black;
     margin-bottom: 15px;
+    margin-top: -1px;
 }
 
 .single-profile a:hover {
@@ -309,7 +320,8 @@ button h2 a:hover {
 .single-profile {
     border-radius: 5px;
     border: 1px solid black;
-    padding: 25px;
+    padding: 25px 25px 25px 40px;
+    margin-bottom: 30px;
 }
 
 .single-profile:hover {
