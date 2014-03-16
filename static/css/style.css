@@ -429,6 +429,11 @@ a:hover {
     margin-top: 10px;
 }
 
+.error-text {
+    background-color: red;
+    font-weight: 800;
+}
+
 
 
 

@@ -60,12 +60,12 @@ def team():
 @app.route("/profiles", defaults={'page': 1})
 @app.route("/profiles/page/<int:page>")
 def profiles(page):
-  pagination = User.query.paginate(page)
+  pagination = User.query.filter(User.active == True).paginate(page)
   return render_template("profiles.html", pagination=pagination)
 
 @app.route("/profile/<int:id>")
 def public_profile(id):
-  user = User.query.filter(User.id == id).first()
+  user = User.query.filter(User.id == id, User.active == True).first()
   if user:
     # TODO: Change when we will have more profiles per user
     profile = user.profiles[0]
@@ -90,7 +90,11 @@ def public_profile_success(id, value_micro):
 @app.route("/profile/<int:id>/bid", methods=["POST"])
 @login_required
 def bid_profile(id):
-  user = User.query.filter(User.id == id).first()
+  if not current_user.active:
+    flash("You need to activate your account first. Please respond to invitation email.")
+    return redirect(url_for("public_profile", id=id))
+    
+  user = User.query.filter(User.id == id, User.active == True).first()
   if not user:
     flash("Given user profile does not longer exist.")
     return redirect(url_for("profiles"))
