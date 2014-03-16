@@ -105,6 +105,26 @@ class TestSender(unittest.TestCase):
     self.assertIn(email.email_hash, args[-1])
     self.assertEqual(args[0], self.user)
 
+  def test_answer_email(self):
+    transaction = Transaction(bid_id_old = 42,
+        bid_created_at = self.user.created_at,
+        buyer_user_id = self.user.id,
+        seller_user_id = self.another_user.id,
+        value_satoshi = 100,
+        coinbase_order = "unknown",
+        status = "wait_for_answer")
+    db.session.add(transaction)
+    db.session.commit()
+    self.sender.send_answer_email(transaction, "Why?")
+    self.assertEqual(len(self.user.active_emails), 0)
+    self.assertEqual(len(self.another_user.active_emails), 1)
+    self.assertEqual(len(self.sender._send_email.call_args_list), 1)
+    email = self.another_user.active_emails[0]
+    args, kwargs = self.sender._send_email.call_args
+    self.assertIn(email.email_hash, args[-1])
+    self.assertIn("Why?", args[-1])
+    self.assertEqual(args[0], self.another_user)
+
 
 if __name__ == '__main__':
   unittest.main()

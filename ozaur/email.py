@@ -194,7 +194,37 @@ Hash: %(hash)s (please don't remove it)""" % args):
       db.session.rollback()
 
   def send_answer_email(self, transaction, question):
-    pass # TODO: implement
+    email = Email(to_user_id = transaction.seller.id,
+      email_hash = random_email_hash(), # We need it b/c we use it before commit
+      purpose = "answer")
+
+    db.session.add(email)
+
+    args = {"buyer": transaction.buyer.display_name,
+        "seller": transaction.seller.display_name,
+        "question": question,
+        "hash": email.email_hash }
+
+    if self._send_email(transaction.seller, "Answer the question from '%s', earn bitcoins!" % (transaction.buyer.display_name), """
+Hi %(seller)s,
+
+'%(buyer)s' have a question for you, please answer it by replying to this email. You will earn bitcoins for this response.
+
+Please concentrate and try to spend at least 5 minutes on it. It is ok to decline requests, but please be as helpful as possible.
+
+Question: '''
+%(question)s
+'''
+
+Thanks for selling your attention,
+Ozaur
+
+PS: Please try to write your answer within 48 hours. Otherwise you may not earn bitcoins...
+
+Hash: %(hash)s (please don't remove it)""" % args):
+      db.session.commit()
+    else:
+      db.session.rollback()
 
   def send_result_email(self, transaction, answer):
     pass # TODO: implement
