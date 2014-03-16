@@ -93,7 +93,7 @@ def bid_profile(id):
   if not current_user.active:
     flash("You need to activate your account first. Please respond to invitation email.")
     return redirect(url_for("public_profile", id=id))
-    
+
   user = User.query.filter(User.id == id, User.active == True).first()
   if not user:
     flash("Given user profile does not longer exist.")
@@ -153,6 +153,8 @@ def create_account():
 
     sender = Sender()
     sender.send_invitation_email(user)
+
+    flash("To activate your account you need to respond to invitation email. Please reply JOIN OZAUR.")
   except IntegrityError, e:
     db.session.rollback()
     user = User.query.filter(User.email == user_json["emailAddress"]).first()
@@ -197,7 +199,7 @@ def save_interested_in():
   return "OK"
 
 # Email receiver api
-# The obfuscated endpoint shoulb be enoug for now
+# The obfuscated endpoint should be enough for now
 @app.route("/notify/mail/053c617d678e0848f52c29b0fc8b7afe", methods=["POST"])
 def mailgun_notification():
   # TODO: check if it is mailgun
