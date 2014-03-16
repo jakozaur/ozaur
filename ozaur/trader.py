@@ -16,10 +16,16 @@ class Trader(object):
     return True
 
   def accept_bid(self, seller_user, bid):
+    if seller_user.id != bid.seller_user_id:
+      raise Exception("Invalid user tries to accept the bid")
+
     transaction = bid.to_transaction()
     db.session.add(transaction)
     db.session.delete(bid)
     db.session.commit() # TODO: catch exception?
+    db.session.refresh(transaction)
+
+    self.sender.send_question_email(transaction)
 
   def question_asked(self, buyer_user, transaction, question):
     pass

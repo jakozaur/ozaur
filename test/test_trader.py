@@ -39,8 +39,24 @@ class TestTrader(unittest.TestCase):
     self.assertEquals(len(self.seller.seller_transaction), 1)
     self.assertEquals(len(self.buyer.buyer_transaction), 1)
 
+  def test_bid_accept_permissions(self):
+    self.trader.bid(self.buyer, self.seller, 100)
 
+    fail = False
+    try:
+      self.trader.accept_bid(self.buyer, self.seller.seller_bid[0])
+    except:
+      fail = True
 
+    self.assert_(fail)
+    self.assertEquals(len(self.seller.seller_bid), 1)
+    self.assertEquals(len(self.seller.seller_transaction), 0)
+
+  def test_bid_accept_email(self):
+    self.trader.bid(self.buyer, self.seller, 100)
+    self.trader.accept_bid(self.seller, self.seller.seller_bid[0])
+    transaction = self.seller.seller_transaction[0]
+    self.sender.send_question_email.assert_called_with(transaction)
 
 
 if __name__ == '__main__':

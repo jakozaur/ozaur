@@ -162,8 +162,9 @@ Hash: %(hash)s (please don't remove it)
     Your truly, 
     Ozaur 
       """)
-    pass
- 
+
+  def send_question_email(self, transaction):
+    pass # TODO: implement
 
 process_incoming_email = Responder(Sender()).process_email
 
