@@ -57,7 +57,7 @@ def logout():
 def team():
   jacek_url, gosia_url = "#", "#"
   jacek = User.query.filter(User.email == "jacek@migdal.pl").first()
-  gosia = User.query.filter(User.email == "gocha992@gmail.com").first()
+  gosia = User.query.filter(User.email == "malgorzata@migdal.pl").first()
   if jacek:
     jacek_url = url_for("public_profile", id=jacek.id)
   if gosia:
