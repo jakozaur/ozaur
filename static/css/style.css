@@ -418,6 +418,18 @@ a:hover {
     font-weight: 800;
 }
 
+.fb-share-button {
+    float: left;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
+
+.twitter-share-button {
+    margin-top: 10px;
+}
+
+
 
 
 
