@@ -214,6 +214,13 @@ img.user-portrait {
     margin-top: 80px;
 }
 
+@media (max-width: 420px) {
+    img.portrait {
+        margin-left: 37px;
+    }
+}
+
+
 
 label {
     margin-left: 10px;
