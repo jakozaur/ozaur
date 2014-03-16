@@ -55,7 +55,14 @@ def logout():
 
 @app.route("/team")
 def team():
-  return render_template("team.html")
+  jacek_url, gosia_url = "#", "#"
+  jacek = User.query.filter(User.email == "jacek@migdal.pl").first()
+  gosia = User.query.filter(User.email == "gosia@migdal.pl").first()
+  if jacek:
+    jacek_url = url_for("public_profile", id=jacek.id)
+  if gosia:
+    gosia_url = url_for("public_profile", id=gosia.id)
+  return render_template("team.html", jacek_url=jacek_url, gosia_url=gosia_url)
 
 @app.route("/profiles", defaults={'page': 1})
 @app.route("/profiles/page/<int:page>")
