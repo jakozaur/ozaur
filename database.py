@@ -69,7 +69,9 @@ class Bid(db.Model, ValueMixin, TimeMixin):
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_bid")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_bid")
 
-  __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
+  __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"),
+    Index("bid_seller_user_id_idx", "seller_user_id"),
+    Index("bid_coinbase_order_idx", "coinbase_order", unique=True))
 
   def to_transaction(self):
     return Transaction(bid_id_old = self.id,

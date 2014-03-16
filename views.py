@@ -250,7 +250,11 @@ def coinbase_notification():
       app.logger.error("One of the users with id %d or %d doesn't exists" % (int(customs[0]), int(customs[1])))
       return "Invalid custom field", 500
 
-    trader.bid(buyer, seller, value_satoshi, coinbase_order_id)
+    try:
+      trader.bid(buyer, seller, value_satoshi, coinbase_order_id)
+    except:
+      app.logger.error("Likely somebody was trying to use same payment twice for order '%s'!" % (coinbase_order_ids))
+      return "Don't be super evil!", 401
 
     return "OK"
   else:

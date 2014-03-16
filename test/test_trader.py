@@ -24,6 +24,20 @@ class TestTrader(unittest.TestCase):
   def tearDown(self):
     delete_schema()
 
+  def test_not_allow_double_bid_with_same_id(self):
+    self.trader.bid(self.buyer, self.seller, 100, "A")
+    fail = False
+    try:
+      self.trader.bid(self.buyer, self.seller, 100, "A")
+    except:
+      fail = True
+
+    self.assert_(fail)
+
+  def test_allow_double_bid_with_different_id(self):
+    self.trader.bid(self.buyer, self.seller, 100, "A")
+    self.trader.bid(self.buyer, self.seller, 100, "B")
+
   def test_bid_accept(self):
     self.trader.bid(self.buyer, self.seller, 100)
 

@@ -11,7 +11,12 @@ class Trader(object):
     bid.buyer = buyer_user
     bid.seller = seller_user
     db.session.add(bid)
-    db.session.commit()
+    try:
+      db.session.commit()
+    except Exception as e:
+      db.session.rollback()
+      # We can get it when you try to double create bid from same coinbase order
+      raise e
     # TODO: Send email on first bid
     return True
 
