@@ -12,10 +12,12 @@ from database import db, User, Profile, Bid, Payout
 from main import app
 from ozaur.email import Sender, Responder
 from ozaur.trader import Trader
+from coinbase import Coinbase
 
 _sender = Sender()
 trader = Trader(_sender)
 process_incoming_email = Responder(_sender, trader).process_email
+coinbase = Coinbase()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -102,13 +104,19 @@ def bid_profile(id):
         (value_micro, config.MAX_BID_SATOSHI / config.SATOSHI_IN_MICRO))
     return redirect(url_for("public_profile", id=id))
 
-  try:
-    trader.bid(current_user, user, value_satoshi)
-    flash(u"You have successfully bidded %s μBTC on '%s'." % (value_micro, user.display_name))
-  except:
-    flash(u"Your bid on '%s' was unsuccessful." % (user.display_name))
+  #try:
+  #  trader.bid(current_user, user, value_satoshi)
+  #  flash(u"You have successfully bidded %s μBTC on '%s'." % (value_micro, user.display_name))
+  #except:
+  #  flash(u"Your bid on '%s' was unsuccessful." % (user.display_name))
 
-  return redirect(url_for("public_profile", id=id))
+  # TODO: add urls 
+  urls = {
+    "callback": request.url_root[:-1] + url_for("coinbase_notification"),
+    "cancel": request.url_root[:-1] + url_for("public_profile", id=id)
+  }
+  payment_url = coinbase.generate_payment_link(current_user, user, value_satoshi, urls)
+  return redirect(payment_url)
 
 @app.route("/create_account", methods=["POST"])
 def create_account():
@@ -197,6 +205,29 @@ def mailgun_notification():
   stripped = request.form["stripped-text"]
 
   process_incoming_email(recipient, body, stripped)
+
+  return "OK"
+
+@app.route("/notify/coinbase", methods=["POST"])
+def coinbase_notification():
+  app.logger.inf("Coinbase notify %s" % (request.data))
+  if request.json:
+    order = request.json["order"]
+    customs = order["custom"].split(":")
+    if len(customes) != 2:
+      #TODO problem
+      pass
+
+    buyer = User.query.filter(User.id == int(customes[0])).first()
+    seller = User.query.filter(User.id == int(customes[1])).first()
+
+    trader.bid(buyer, seller, order["total_native"]["cents"], order["id"])
+
+  else:
+    pass
+    # TODO: Log that
+  # TODO: check if it is coinbase
+
 
   return "OK"
 

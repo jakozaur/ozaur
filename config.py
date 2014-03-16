@@ -11,6 +11,9 @@ MAILGUN_DOMAIN = os.environ.get("OZAUR_MAILGUN_DOMAIN", "(none)")
 
 MAX_BID_SATOSHI = 10 ** 7 # 0.1 Bitcoin
 
+COINBASE_API_KEY = os.environ.get("COINBASE_API_KEY", "(none)")
+COINBASE_SECRET_KEY = os.environ.get("COINBASE_SECRET_KEY", "(none)")
+
 
 # For AWS Beanstalk
 if "RDS_HOSTNAME" in os.environ:

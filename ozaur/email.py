@@ -180,7 +180,7 @@ Hi %(buyer)s,
 
 You won '%(seller)s' attention.
 
-Ask him a question by replying to this email.
+Ask this person a question by replying to this email.
 
 Be concise, the question should be answerable in ~ 5 minutes.
 
@@ -242,7 +242,7 @@ Hi %(buyer)s,
 %(answer)s
 '''
 
-Thanks for tipping him with bitcoins.
+Thanks for tipping this user with bitcoins.
 
 Thanks for buying the attention with us,
 Ozaur""" % args):
