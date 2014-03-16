@@ -105,7 +105,7 @@ h2 {
     font-family: 'Raleway', sans-serif;
 }
 
-p, label, #sign-up {
+p, label, #sign-up, .account-part li {
     font-size: 18px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -159,7 +159,7 @@ h4 {
     margin-bottom: 50px;
 }
 
-.rules `{
+.rules {
     margin-top: 30px;
     margin-bottom: 20px;
 }
@@ -173,10 +173,6 @@ h4 {
     background-color: #AFBABA;
 }
 
-
-.main {
-    background-color: #BFB8BB;
-}
 
 img.icon-small {
     padding-top: 50px;
@@ -388,6 +384,31 @@ input {
     padding-bottom: 55px;
 }
 
+#edit {
+    margin-left: 15px;
+}
+
+a span.span-text {
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    text-align: justify;
+    line-height: 30px;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.account-part {
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.account-part h2 {
+    margin-bottom: 20px;
+}
 
 
 

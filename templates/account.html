@@ -2,7 +2,7 @@
 {% block title %}My account{% endblock %}
 {% block body %}
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2 account-part">
     <h2>My bids</h2>
     {% if current_user.buyer_bid %}
     <ul>
@@ -16,8 +16,8 @@
     <p>You have no bids... Maybe you would like to <a href="/profiles">email someone</a>.</p>
     {% endif %}
   </div>
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0">
-    <h2>Bids on me</h2>
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0 account-part">
+    <h2>Who bids on me</h2>
     {% if current_user.seller_bid %}
     <ul>
       {% for bid in current_user.seller_bid %}
@@ -31,10 +31,11 @@
     {% endif %}
   </div>
 </div>
+
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2 account-part">
     <h2>Outstanding payouts</h2>
-    <p>Due to <span title="USA bank transfers take few days... so this side-project has similar delays ;). For initial version we decided prioritize security over anything else (including this delay).">security reasons</span> payouts may take up to 2 working days.</p>
+    <p>Due to <abbr title="USA bank transfers take few days... so this side-project has similar delays ;). For initial version we decided prioritize security over anything else (including this delay).">security reasons</abbr> payouts may take up to 2 working days.</p>
     {% if payouts %}
     <ul>
       {% for payout in payouts %}
@@ -45,15 +46,16 @@
     <p>No payouts yet. Promote your profile and start earning bitcoins!</p>
     {% endif %}
   </div>
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0">
-    <h2>Your profile</h2>
-    <a class="btn btn-success" href="/my_profile">Edit interested in</a>
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0 account-part">
+    <h2>My profile</h2>
+    <a href="/my_profile"><span class="span-text">Edit</span><img id="edit" src="static/images/edit.png"></a>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-    <h2>Your email archive</h2>
-    <p>Just go to your email account and find them (e.g. from:*@ozaur.com). We do not store your messages.</p>
+  <div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-2 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2 account-part">
+    <h2>My email archive</h2>
+    <p>Just go to your email account and find them (e.g. searching by: from:*@ozaur.com). We do not store your messages.</p>
     <p>Strong privacy delivered.</p>
   </div>
 </div>
