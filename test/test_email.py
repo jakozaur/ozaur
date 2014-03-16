@@ -1,6 +1,7 @@
 import os
 
 os.environ["OZAUR_DB_URL"] = "sqlite://" # in memory
+os.environ["OZAUR_DB_DEBUG"] = "false"
 
 import unittest
 from mock import Mock

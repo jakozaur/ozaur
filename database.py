@@ -71,6 +71,15 @@ class Bid(db.Model, ValueMixin, TimeMixin):
 
   __table_args__ = (Index("bid_buyer_user_id_idx", "buyer_user_id"), Index("bid_seller_user_id_idx", "seller_user_id"),)
 
+  def to_transaction(self):
+    return Transaction(bid_id_old = self.id,
+      bid_created_at = self.created_at,
+      buyer_user_id = self.buyer_user_id,
+      seller_user_id = self.seller_user_id,
+      coinbase_order = self.coinbase_order,
+      value_satoshi = self.value_satoshi,
+      status = "wait_for_question")
+
 
 class Transaction(db.Model, ValueMixin, TimeMixin):
   __tablename__ = "transaction"

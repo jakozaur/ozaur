@@ -1,6 +1,7 @@
 import os
 
 os.environ["OZAUR_DB_URL"] = "sqlite://" # in memory
+os.environ["OZAUR_DB_DEBUG"] = "false"
 
 import unittest
 from mock import Mock
@@ -32,7 +33,7 @@ class TestTrader(unittest.TestCase):
     self.assertEquals(len(self.buyer.buyer_transaction), 0)
 
     self.trader.accept_bid(self.seller, self.seller.seller_bid[0])
-    
+
     self.assertEquals(len(self.seller.seller_bid), 0)
     self.assertEquals(len(self.buyer.buyer_bid), 0)
     self.assertEquals(len(self.seller.seller_transaction), 1)

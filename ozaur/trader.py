@@ -16,7 +16,10 @@ class Trader(object):
     return True
 
   def accept_bid(self, seller_user, bid):
-    pass
+    transaction = bid.to_transaction()
+    db.session.add(transaction)
+    db.session.delete(bid)
+    db.session.commit() # TODO: catch exception?
 
   def question_asked(self, buyer_user, transaction, question):
     pass
