@@ -48,11 +48,13 @@ class Responder(object):
         return False, "'%s' doesn't have JOIN OZAUR!"
 
     def do_ask():
-      # TODO: change the status of email!
+      transaction = matched_email.transaction
+      self.trader.question_asked(user, transaction, response)
       return True, "question asked!"
 
-    def do_respond():
-      # TODO: close the transaction
+    def do_answer():
+      transaction = matched_email.transaction
+      self.trader.question_answered(user, transaction, response)
       return True, "response given!"
 
     def do_survey():
@@ -62,7 +64,7 @@ class Responder(object):
     actions = {
       "verify": do_verify,
       "ask": do_ask,
-      "respond": do_respond,
+      "answer": do_answer,
       "survey": do_survey
     }
 
@@ -163,6 +165,7 @@ Ozaur
 
   def send_question_email(self, transaction):
     email = Email(to_user_id = transaction.buyer.id,
+      transaction_id = transaction.id,
       email_hash = random_email_hash(), # We need it b/c we use it before commit
       purpose = "ask")
 
@@ -195,6 +198,7 @@ Hash: %(hash)s (please don't remove it)""" % args):
 
   def send_answer_email(self, transaction, question):
     email = Email(to_user_id = transaction.seller.id,
+      transaction_id = transaction.id,
       email_hash = random_email_hash(), # We need it b/c we use it before commit
       purpose = "answer")
 
