@@ -140,9 +140,7 @@ Hash: %(hash)s (please don't remove it)
     self._send_email(user, "Welcome the awesome human!", """
       Thanks again joining Ozaur! Let me explain quickly, how it all works: 
       1. Your profile on Ozaur has just been created using your LinkedIn data. 
-      We do not display any of your contact info. To edit profile you can:
-      - change information on LinkedIn;
-      - add additional paragraph on your Ozaur profile ("Interested in");
+      We do not display any of your contact info. 
       2. Now you can go ahead and browse the others profiles.
        On each profile you will see, how much bitcoins people are willing to pay for this user attention. 
       3. Interested in somebody's attention and want to bid? 
@@ -164,6 +162,23 @@ Hash: %(hash)s (please don't remove it)
       """)
 
   def send_question_email(self, transaction):
+    """
+    Hi there,
+
+    Congratulations! You have just winned another user attention. You are now allowed to write this person an email.
+    Please, try to do that within next 48 hours. 
+    Simply go ahead and respond to this email with your message. 
+    We will securely pass it to the right user.
+
+    This person also will try to respond within 48 hours. 
+    You will be charged only if you got the answer.
+
+    Stay tuned!
+
+    Yours truly,
+    Ozaur
+
+    """
     pass # TODO: implement
 
 process_incoming_email = Responder(Sender()).process_email
