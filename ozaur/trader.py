@@ -28,7 +28,17 @@ class Trader(object):
     self.sender.send_question_email(transaction)
 
   def question_asked(self, buyer_user, transaction, question):
-    pass
+    if buyer_user.id != transaction.buyer_user_id:
+      raise Exception("Invalid user tries to answer the question")
+
+    if transaction.status != "wait_for_question":
+      raise Exception("Question was already asked")
+
+    transaction.status = "wait_for_answer"
+    db.session.add(transaction)
+    db.session.commit()
+
+    self.sender.send_answer_email(transaction, question)
 
   def question_answered(self, seller_user, transaction, answer):
     pass

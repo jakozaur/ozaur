@@ -181,6 +181,9 @@ Hash: %(hash)s (please don't remove it)
     """
     pass # TODO: implement
 
+  def send_answer_email(self, transaction, question):
+    pass # TODO: implement
+
 process_incoming_email = Responder(Sender()).process_email
 
 

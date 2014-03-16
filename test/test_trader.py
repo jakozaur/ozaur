@@ -58,6 +58,37 @@ class TestTrader(unittest.TestCase):
     transaction = self.seller.seller_transaction[0]
     self.sender.send_question_email.assert_called_with(transaction)
 
+  def test_question_asked_permissions(self):
+    self.trader.bid(self.buyer, self.seller, 100)
+    self.trader.accept_bid(self.seller, self.seller.seller_bid[0])
+    fail = False
+    try:
+      self.trader.question_asked(self.seller, self.seller.seller_transaction[0], "Why?")
+    except:
+      fail = True
+    self.assert_(fail)
+
+  def test_question_asked_double(self):
+    self.trader.bid(self.buyer, self.seller, 100)
+    self.trader.accept_bid(self.seller, self.seller.seller_bid[0])
+    fail = False
+    try:
+      self.trader.question_asked(self.buyer, self.buyer.buyer_transaction[0], "Why?")
+      self.trader.question_asked(self.buyer, self.buyer.buyer_transaction[0], "Why?")
+    except:
+      fail = True
+    self.assert_(fail)
+
+  def test_question_asked(self):
+    self.trader.bid(self.buyer, self.seller, 100)
+    self.trader.accept_bid(self.seller, self.seller.seller_bid[0])
+    self.trader.question_asked(self.buyer, self.buyer.buyer_transaction[0], "Why?")
+
+    self.assertEquals(len(self.buyer.buyer_transaction), 1)
+    transaction = self.buyer.buyer_transaction[0]
+    self.assertEquals(transaction.status, "wait_for_answer")
+    self.sender.send_answer_email.assert_called_with(transaction, "Why?")
+
 
 if __name__ == '__main__':
   unittest.main()
