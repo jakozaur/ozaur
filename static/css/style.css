@@ -216,7 +216,7 @@ img.user-portrait {
 
 @media (max-width: 420px) {
     img.portrait {
-        margin-left: 55px;
+        margin-right: 37px;
     }
 }
 
