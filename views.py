@@ -210,16 +210,16 @@ def mailgun_notification():
 
 @app.route("/notify/coinbase", methods=["POST"])
 def coinbase_notification():
-  app.logger.inf("Coinbase notify %s" % (request.data))
+  app.logger.info("Coinbase notify %s" % (request.data))
   if request.json:
     order = request.json["order"]
     customs = order["custom"].split(":")
-    if len(customes) != 2:
+    if len(customs) != 2:
       #TODO problem
       pass
 
-    buyer = User.query.filter(User.id == int(customes[0])).first()
-    seller = User.query.filter(User.id == int(customes[1])).first()
+    buyer = User.query.filter(User.id == int(customs[0])).first()
+    seller = User.query.filter(User.id == int(customs[1])).first()
 
     trader.bid(buyer, seller, order["total_native"]["cents"], order["id"])
 
