@@ -81,6 +81,12 @@ def public_profile(id):
     flash("Given user profile does not exist.")
     return redirect(url_for("profiles"))
 
+@app.route("/profile/<int:id>/success/<int:value_micro>")
+def public_profile_success(id, value_micro):
+  user = User.query.filter(User.id == id).first()
+  flash(u"You have successfully bidded %s μBTC on '%s'." % (value_micro, user.display_name))
+  return redirect(url_for("public_profile", id = id))
+
 @app.route("/profile/<int:id>/bid", methods=["POST"])
 @login_required
 def bid_profile(id):
@@ -104,15 +110,9 @@ def bid_profile(id):
         (value_micro, config.MAX_BID_SATOSHI / config.SATOSHI_IN_MICRO))
     return redirect(url_for("public_profile", id=id))
 
-  #try:
-  #  trader.bid(current_user, user, value_satoshi)
-  #  flash(u"You have successfully bidded %s μBTC on '%s'." % (value_micro, user.display_name))
-  #except:
-  #  flash(u"Your bid on '%s' was unsuccessful." % (user.display_name))
-
-  # TODO: add urls 
   urls = {
     "callback": request.url_root[:-1] + url_for("coinbase_notification"),
+    "success": request.url_root[:-1] + url_for("public_profile_success", id=id, value_micro=value_micro),
     "cancel": request.url_root[:-1] + url_for("public_profile", id=id)
   }
   payment_url = coinbase.generate_payment_link(current_user, user, value_satoshi, urls)

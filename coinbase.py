@@ -32,6 +32,7 @@ class Coinbase(object):
           "custom": "%d:%d" % (buyer.id, seller.id),
           "custom_secure": True,
           "callback_url": urls["callback"],
+          "success_url": urls["success"],
           "cancel_url": urls["cancel"],
           "description": u"You need to pay %d μBTC to place a bid. After your bid will be accepted, you could send message to '%s'. '%s' promise to spent at least 5 minutes and reply to you." % (value_micro, seller.display_name, seller.display_name),
           "style": "none",
