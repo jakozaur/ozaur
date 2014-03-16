@@ -213,15 +213,22 @@ def coinbase_notification():
   app.logger.info("Coinbase notify %s" % (request.data))
   if request.json:
     order = request.json["order"]
-    customs = order["custom"].split(":")
+    custom_field = order["custom"]
+    value_satoshi = order["total_native"]["cents"]
+    coinbase_order_id = order["id"]
+
+    if not coinbase.verify_order_validity(coinbase_order_id, value_satoshi, custom_field):
+      return "Don't be evil!", 401
+
+    customs = custom_field.split(":")
     if len(customs) != 2:
-      #TODO problem
-      pass
+      app.logger("Invalid custom field")
+      return "Invalid custom field", 500
 
     buyer = User.query.filter(User.id == int(customs[0])).first()
     seller = User.query.filter(User.id == int(customs[1])).first()
 
-    trader.bid(buyer, seller, order["total_native"]["cents"], order["id"])
+    trader.bid(buyer, seller, value_satoshi, coinbase_order_id)
 
   else:
     pass

@@ -7,6 +7,7 @@ import hashlib
 import json
 
 import config
+from main import app
 
 class Coinbase(object):
   def __init__(self):
@@ -63,3 +64,51 @@ class Coinbase(object):
       return None
 
     return "https://coinbase.com/checkouts/%s" % (response["button"]["code"])
+
+  def verify_order_validity(self, coinbase_order_id, value_satoshi, custom_field):
+    url = "https://coinbase.com/api/v1/orders/%s" % (coinbase_order_id)
+
+    nounce = str(int(time.time() * 1e6))
+    message = nounce + url
+    signed = hmac.new(config.COINBASE_SECRET_KEY, message, hashlib.sha256).hexdigest()
+
+    r = requests.get(
+      url,
+      headers = {"ACCESS_KEY": self.api_key,
+        "ACCESS_SIGNATURE": signed,
+        "ACCESS_NONCE": nounce,
+        "Content-Type": "application/json"})
+
+    if not r.ok:
+      app.logger.error("Error while veryfing the transaction %s" % (r.text))
+      return False
+
+    json = r.json()
+
+    if "order" not in json:
+      app.logger.error("Can't find order with given id, someone might be evil! Expected id: %s, got '%s'" % (coinbase_order_id, r.text))
+      return False
+
+    order = json["order"]
+
+    if order["id"] != coinbase_order_id:
+      app.logger.error("Value of id mismatches, someone might be evil! Expected: %d, got '%s'" % (coinbase_order_id, r.text))
+      return False
+
+    if order["total_btc"]["cents"] != value_satoshi:
+      app.logger.error("Value of transaction mismatches, someone might be evil! Expected: %d, got '%s'" % (value_satoshi, r.text))
+      return False
+
+    if order["custom"] != custom_field:
+      app.logger.error("Custom field mismatches, someone miht be evil! Expected: %s, got '%s'", custom_field, r.text)
+      return False
+
+    app.logger.info("Verified '%s' transaction successfully. Verify: '%s'" % (custom_field, r.text))
+    return True
+
+
+
+
+
+
+
