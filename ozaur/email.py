@@ -125,10 +125,10 @@ class Sender(object):
       purpose = "verify")
 
     db.session.add(email) 
-    if self._send_email(user, "Join the Ozaur! Buy and sell attention using bitcoins.", """
+    if self._send_email(user, "Join the Ozaur! Buy and sell attention using bitcoin.", """
 Welcome %(name)s!
 
-You're about to join revolution!
+You're about to join the attention marketplace!
 
 If you have registered, please confirm by replying "JOIN OZAUR" to this email.
 If you don't reply we can't proceed further.
@@ -146,28 +146,17 @@ Hash: %(hash)s (please don't remove it)
 
   def send_welcome_email(self, user):
     self._send_email(user, "Welcome the awesome human!", """
-Thanks again joining Ozaur! Let me explain quickly, how it all works: 
-1. Your profile on Ozaur has just been created using your LinkedIn data. 
-We do not display any of your contact info. 
-2. Now you can go ahead and browse the others profiles.
- On each profile you will see, how much bitcoins people are willing to pay for this user attention. 
-3. Interested in somebody's attention and want to bid? 
-First you need to have this amount of bitcoins on your account. Simply: ("TODO: Jacek!!!!!!")
-4. Simply type how much you want to pay for user attention. 
-5. Now this amount of bitcoins is freezed on your account. It means, that you can not use it, until auction is solved.
-It is solved every week on Tuesday at 2pm PST. 
-6. If you bidded with the biggest amount of bitcoins - you are the winner! Go ahead and send an email to this user via Ozaur. 
-7. User whose attention you won has 48 hours to respond to you. Done the job? You are charged. Not responded? Monay are active again on your account.
-8. Remember - people will be bidding on your profile as well! When got weekly email from winner, try to respond nicely and withing 48 hours. 
-Therefore bitcoins will land on your account:)
+How Ozaur works:
 
-Questions? Ask us anything using this email.
+1. Interested in somebody's attention? Place a bid.
+2. Each week you can get an question from other user. Please respond and we will pay you bitcoin from highest bidder.
+
+Please be nice and be as helpful as you can.
 
 Enjoy!
 
-Your truly, 
-Ozaur 
-      """)
+Thanks for joining,
+Ozaur""")
 
   def send_question_email(self, transaction):
     email = Email(to_user_id = transaction.buyer.id,
@@ -215,7 +204,7 @@ Hash: %(hash)s (please don't remove it)""" % args):
         "question": question,
         "hash": email.email_hash }
 
-    if self._send_email(transaction.seller, "Answer the question from '%s', earn bitcoins!" % (transaction.buyer.display_name), """
+    if self._send_email(transaction.seller, "Answer the question from '%s', earn bitcoin!" % (transaction.buyer.display_name), """
 Hi %(seller)s,
 
 '%(buyer)s' have a question for you, please answer it by replying to this email. You will earn bitcoins for this response.
@@ -229,7 +218,7 @@ Question: '''
 Thanks for selling your attention,
 Ozaur
 
-PS: Please try to write your answer within 48 hours. Otherwise you may not earn bitcoins...
+PS: Please try to write your answer within 48 hours. Otherwise you may not earn bitcoin...
 
 Hash: %(hash)s (please don't remove it)""" % args):
       db.session.commit()
@@ -248,7 +237,7 @@ Hi %(buyer)s,
 %(answer)s
 '''
 
-Thanks for tipping this user with bitcoins.
+Thanks for tipping this user with bitcoin.
 
 Thanks for buying the attention with us,
 Ozaur""" % args):
