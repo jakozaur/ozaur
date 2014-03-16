@@ -63,6 +63,10 @@ python views.py
 
 # Security TODO
 
+# Milestones
+
+1. 2014-03-16 1:11 AM PST (first full transaction)
+
 # Useful tools
 http://postgresapp.com/
 
