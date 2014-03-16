@@ -24,6 +24,11 @@
       <li>{{ bid.value_micro() }} <abbr title="Micro bitcoin 10^(-6)">μBTC</abbr> placed on
         <span class="moment-date">{{ bid.created_at }}</span>
       </li>
+      <form method="post" action="/account/accept_bid">
+        <input class="btn btn-success" type="submit" value="Accept the highest bid" title="We accept every week the best offer. However, if you would like to receive more emails, feel free to accept them manually. 
+
+This action will send the highest bidder request to ask you a question and you can earn bitcoins more often.">
+      </form>
       {% endfor %}
     </ul>
     {% else %}

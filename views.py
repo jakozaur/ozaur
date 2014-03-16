@@ -151,6 +151,18 @@ def account():
   payouts = Payout.query.filter(Payout.user_id == current_user.id, Payout.is_paid == False).all()
   return render_template("account.html", payouts = payouts)
 
+@app.route("/account/accept_bid", methods=["POST"])
+@login_required
+def accept_bid():
+  bids = current_user.seller_bid
+  if bids:
+    best_bid = max(bids, key = lambda b: b.value_satoshi)
+    trader.accept_bid(current_user, best_bid)
+    flash(u"You have accepted the best bid for %s μBTC. Now wait until bidder asks a question, then will send it to you." % (best_bid.value_micro()))
+  else:
+    flash("You have no seller bids.")
+  return redirect(url_for("account"))
+
 @app.route("/my_profile")
 @login_required
 def my_profile():

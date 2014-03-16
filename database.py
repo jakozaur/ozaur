@@ -96,7 +96,9 @@ class Transaction(db.Model, ValueMixin, TimeMixin):
   buyer = relationship("User", foreign_keys=[buyer_user_id], backref="buyer_transaction")
   seller = relationship("User", foreign_keys=[seller_user_id], backref="seller_transaction")
 
-  __table_args__ = (Index("transaction_buyer_user_id_idx", "buyer_user_id"), Index("transaction_seller_user_id_idx", "seller_user_id"),)
+  __table_args__ = (Index("transaction_buyer_user_id_idx", "buyer_user_id"),
+      Index("transaction_seller_user_id_idx", "seller_user_id"),
+      Index("transaction_bid_id_old", "bid_id_old", unique=True))
 
 
 class Payout(db.Model, ValueMixin, TimeMixin):

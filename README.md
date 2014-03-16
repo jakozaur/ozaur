@@ -58,6 +58,9 @@ python views.py
 1. Just show top N bds
 2. Show names of people you bid on.
 3. Reimport LinkedIn.
+4. Active transactions.
+
+# Security TODO
 
 # Useful tools
 http://postgresapp.com/
