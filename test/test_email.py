@@ -74,6 +74,30 @@ class TestResponder(unittest.TestCase):
     self.assertEqual(len(self.user.active_emails), 1) # We still have verification left
     self.trader.question_asked.assert_called_with(self.user, transaction, "Some question?")
 
+  def test_got_question_twice(self):
+    transaction = Transaction(bid_id_old = 42,
+        bid_created_at = self.user.created_at,
+        buyer_user_id = self.user.id,
+        seller_user_id = self.another_user.id,
+        value_satoshi = 100,
+        coinbase_order = "unknown",
+        status = "wait_for_question")
+    email = Email(to_user_id = self.user.id, purpose = "ask")
+    transaction.active_emails.append(email)
+    db.session.add(transaction)
+    db.session.commit()
+   
+    from_email = self.user.address_hash + "@example.com"
+    self.responder.process_email(from_email,
+        "Hash: %s ..." % (email.email_hash), "Some question?\n%s" % (from_email))
+
+    db.session.refresh(transaction)
+    db.session.refresh(self.user)
+
+    self.assertEqual(len(self.user.active_emails), 1) # We still have verification left
+    self.trader.question_asked.assert_called_with(self.user, transaction, "Some question?")
+
+
   def test_got_answer(self):
     transaction = Transaction(bid_id_old = 42,
         bid_created_at = self.user.created_at,
@@ -95,6 +119,30 @@ class TestResponder(unittest.TestCase):
 
     self.assertEqual(len(self.another_user.active_emails), 0)
     self.trader.question_answered.assert_called_with(self.another_user, transaction, "Some answer")
+
+  def test_got_answer_twice(self):
+    transaction = Transaction(bid_id_old = 42,
+        bid_created_at = self.user.created_at,
+        buyer_user_id = self.user.id,
+        seller_user_id = self.another_user.id,
+        value_satoshi = 100,
+        coinbase_order = "unknown",
+        status = "wait_for_answer")
+    email = Email(to_user_id = self.another_user.id, purpose = "answer")
+    transaction.active_emails.append(email)
+    db.session.add(transaction)
+    db.session.commit()
+   
+    from_email = self.another_user.address_hash + "@example.com"
+    self.responder.process_email(from_email,
+        "Hash: %s ..." % (email.email_hash), "Some answer\n%s" % (from_email))
+
+    db.session.refresh(transaction)
+    db.session.refresh(self.another_user)
+
+    self.assertEqual(len(self.another_user.active_emails), 0)
+    self.trader.question_answered.assert_called_with(self.another_user, transaction, "Some answer")
+
 
 
 class TestSender(unittest.TestCase):
