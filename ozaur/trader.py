@@ -2,6 +2,7 @@ from database import db, Bid
 from email import Sender
 
 class Trader(object):
+  """Controls Bid/Transaction logic. Checks ACL."""
   def __init__(self, sender):
     self.sender = sender
 
@@ -11,6 +12,16 @@ class Trader(object):
     bid.seller = seller_user
     db.session.add(bid)
     db.session.commit()
+    # TODO: Send email on first bid
     return True
+
+  def accept_bid(self, seller_user, bid):
+    pass
+
+  def question_asked(self, buyer_user, transaction, question):
+    pass
+
+  def question_answered(self, seller_user, transaction, answer):
+    pass
 
 trader = Trader(Sender())

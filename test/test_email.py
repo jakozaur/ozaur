@@ -76,6 +76,7 @@ class TestSender(unittest.TestCase):
     args, kwargs = sender._send_email.call_args
     self.assertIn(email.email_hash, args[-1])
 
+
 if __name__ == '__main__':
   unittest.main()
 
