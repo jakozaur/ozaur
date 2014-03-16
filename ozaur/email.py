@@ -49,12 +49,18 @@ class Responder(object):
 
     def do_ask():
       transaction = matched_email.transaction
-      self.trader.question_asked(user, transaction, response)
+      response_filttered = "\n".join(
+        filter(lambda line: address_hash not in line,
+          response.splitlines()))
+      self.trader.question_asked(user, transaction, response_filttered)
       return True, "question asked!"
 
     def do_answer():
       transaction = matched_email.transaction
-      self.trader.question_answered(user, transaction, response)
+      response_filttered = "\n".join(
+        filter(lambda line: address_hash not in line,
+          response.splitlines()))
+      self.trader.question_answered(user, transaction, response_filttered)
       return True, "response given!"
 
     def do_survey():
