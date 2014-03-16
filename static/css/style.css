@@ -52,6 +52,7 @@ nav button .icon-bar {
     font-family: 'Gafata', sans-serif;
     margin-left: 20px;
     margin-top: 8px;
+    margin-right: 0;
 }
 
 @media (max-width: 767px) {
