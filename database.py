@@ -116,7 +116,7 @@ class Payout(db.Model, ValueMixin, TimeMixin):
   __table_args__ = (Index("payout_user_id_idx", "user_id"), Index("payout_transaction_id_idx", "transaction_id"),)
 
 
-email_purpose_type = Enum("verify", "ask", "respond", "survey", name="email_purpose_type")
+email_purpose_type = Enum("verify", "ask", "answer", "survey", name="email_purpose_type")
 
 class Email(db.Model, TimeMixin):
   __tablename__ = "email"

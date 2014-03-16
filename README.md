@@ -59,6 +59,7 @@ python views.py
 2. Show names of people you bid on.
 3. Reimport LinkedIn.
 4. Active transactions.
+5. Link to profile in ask question email.
 
 # Security TODO
 

@@ -138,48 +138,60 @@ Hash: %(hash)s (please don't remove it)
 
   def send_welcome_email(self, user):
     self._send_email(user, "Welcome the awesome human!", """
-      Thanks again joining Ozaur! Let me explain quickly, how it all works: 
-      1. Your profile on Ozaur has just been created using your LinkedIn data. 
-      We do not display any of your contact info. 
-      2. Now you can go ahead and browse the others profiles.
-       On each profile you will see, how much bitcoins people are willing to pay for this user attention. 
-      3. Interested in somebody's attention and want to bid? 
-      First you need to have this amount of bitcoins on your account. Simply: ("TODO: Jacek!!!!!!")
-      4. Simply type how much you want to pay for user attention. 
-      5. Now this amount of bitcoins is freezed on your account. It means, that you can not use it, until auction is solved.
-      It is solved every week on Tuesday at 2pm PST. 
-      6. If you bidded with the biggest amount of bitcoins - you are the winner! Go ahead and send an email to this user via Ozaur. 
-      7. User whose attention you won has 48 hours to respond to you. Done the job? You are charged. Not responded? Monay are active again on your account.
-      8. Remember - people will be bidding on your profile as well! When got weekly email from winner, try to respond nicely and withing 48 hours. 
-      Therefore bitcoins will land on your account:)
+Thanks again joining Ozaur! Let me explain quickly, how it all works: 
+1. Your profile on Ozaur has just been created using your LinkedIn data. 
+We do not display any of your contact info. 
+2. Now you can go ahead and browse the others profiles.
+ On each profile you will see, how much bitcoins people are willing to pay for this user attention. 
+3. Interested in somebody's attention and want to bid? 
+First you need to have this amount of bitcoins on your account. Simply: ("TODO: Jacek!!!!!!")
+4. Simply type how much you want to pay for user attention. 
+5. Now this amount of bitcoins is freezed on your account. It means, that you can not use it, until auction is solved.
+It is solved every week on Tuesday at 2pm PST. 
+6. If you bidded with the biggest amount of bitcoins - you are the winner! Go ahead and send an email to this user via Ozaur. 
+7. User whose attention you won has 48 hours to respond to you. Done the job? You are charged. Not responded? Monay are active again on your account.
+8. Remember - people will be bidding on your profile as well! When got weekly email from winner, try to respond nicely and withing 48 hours. 
+Therefore bitcoins will land on your account:)
 
-    Questions? Ask us anything using this email.
+Questions? Ask us anything using this email.
 
-    Enjoy!
+Enjoy!
 
-    Your truly, 
-    Ozaur 
+Your truly, 
+Ozaur 
       """)
 
   def send_question_email(self, transaction):
-    """
-    Hi there,
+    email = Email(to_user_id = transaction.buyer.id,
+      email_hash = random_email_hash(), # We need it b/c we use it before commit
+      purpose = "ask")
 
-    Congratulations! You have just winned another user attention. You are now allowed to write this person an email.
-    Please, try to do that within next 48 hours. 
-    Simply go ahead and respond to this email with your message. 
-    We will securely pass it to the right user.
+    db.session.add(email)
 
-    This person also will try to respond within 48 hours. 
-    You will be charged only if you got the answer.
+    args = {"buyer": transaction.buyer.display_name,
+        "seller": transaction.seller.display_name,
+        "hash": email.email_hash }
 
-    Stay tuned!
+    if self._send_email(transaction.buyer, "You won '%s' attention, ask him a question" % (transaction.seller.display_name), """
+Hi %(buyer)s,
 
-    Yours truly,
-    Ozaur
+You won '%(seller)s' attention.
 
-    """
-    pass # TODO: implement
+Ask him a question by replying to this email.
+
+Be concise, the question should be answerable in ~ 5 minutes.
+
+You will get an email once we get an answer to your question.  
+
+Thanks for buying the attention,
+Ozaur
+
+PS: Please try to write your question within 48 hours.
+
+Hash: %(hash)s (please don't remove it)""" % args):
+      db.session.commit()
+    else:
+      db.session.rollback()
 
   def send_answer_email(self, transaction, question):
     pass # TODO: implement

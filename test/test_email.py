@@ -6,7 +6,7 @@ os.environ["OZAUR_DB_DEBUG"] = "false"
 import unittest
 from mock import Mock
 
-from database import create_schema, delete_schema, db, Email, User, EmailArchive
+from database import create_schema, delete_schema, db, Email, User, EmailArchive, Transaction
 from ozaur.email import Responder, Sender
 
 
@@ -60,22 +60,50 @@ class TestResponder(unittest.TestCase):
 class TestSender(unittest.TestCase):
   def setUp(self):
     create_schema()
+    self.user = User(email = "user@example.com", display_name = "First Last")
+    self.another_user = User(email = "another@example.com", display_name = "Yet another User")
+    db.session.add(self.user)
+    db.session.add(self.another_user)
+    db.session.commit()
+    self.sender = Sender()
+    self.sender._send_email = Mock()
 
   def tearDown(self):
     delete_schema()
 
   def test_invitation_email(self):
-    user = User(email = "user@example.com", display_name = "First Last")
-    db.session.add(user)
-    db.session.commit()
-    sender = Sender()
-    sender._send_email = Mock()
-    sender.send_invitation_email(user)
-    self.assertEqual(len(user.active_emails), 1)
-    self.assertEqual(len(sender._send_email.call_args_list), 1)
-    email = user.active_emails[0]
-    args, kwargs = sender._send_email.call_args
+    self.sender.send_invitation_email(self.user)
+    self.assertEqual(len(self.user.active_emails), 1)
+    self.assertEqual(len(self.sender._send_email.call_args_list), 1)
+    email = self.user.active_emails[0]
+    args, kwargs = self.sender._send_email.call_args
     self.assertIn(email.email_hash, args[-1])
+
+  def test_welcome_email(self):
+    self.sender.send_welcome_email(self.user)
+    self.assertEqual(len(self.user.active_emails), 0)
+    self.assertEqual(len(self.sender._send_email.call_args_list), 1)
+    args, kwargs = self.sender._send_email.call_args
+    self.assertIn("welcome", args[-2].lower())
+
+  def test_question_email(self):
+    transaction = Transaction(bid_id_old = 42,
+        bid_created_at = self.user.created_at,
+        buyer_user_id = self.user.id,
+        seller_user_id = self.another_user.id,
+        value_satoshi = 100,
+        coinbase_order = "unknown",
+        status = "wait_for_question")
+    db.session.add(transaction)
+    db.session.commit()
+    self.sender.send_question_email(transaction)
+    self.assertEqual(len(self.user.active_emails), 1)
+    self.assertEqual(len(self.another_user.active_emails), 0)
+    self.assertEqual(len(self.sender._send_email.call_args_list), 1)
+    email = self.user.active_emails[0]
+    args, kwargs = self.sender._send_email.call_args
+    self.assertIn(email.email_hash, args[-1])
+    self.assertEqual(args[0], self.user)
 
 
 if __name__ == '__main__':
