@@ -445,5 +445,6 @@ a img.ozaur-mini {
 @media (max-width: 400px) {
     #main-logo {
         width: 250px;
+        margin-left: 37px;
     }
 }
