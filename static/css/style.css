@@ -214,7 +214,7 @@ img.user-portrait {
     margin-top: 80px;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 400px) {
     img.portrait {
         margin-right: 37px;
     }
