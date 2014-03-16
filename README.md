@@ -67,6 +67,10 @@ python views.py
 
 1. 2014-03-16 1:11 AM PST (first full transaction)
 
+# Before open sourcing
+
+1. Parametrize obfuscation of endpoints
+
 # Useful tools
 http://postgresapp.com/
 

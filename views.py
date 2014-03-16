@@ -193,7 +193,8 @@ def save_interested_in():
   return "OK"
 
 # Email receiver api
-@app.route("/notify/mail", methods=["POST"])
+# The obfuscated endpoint shoulb be enoug for now
+@app.route("/notify/mail/053c617d678e0848f52c29b0fc8b7afe", methods=["POST"])
 def mailgun_notification():
   # TODO: check if it is mailgun
 
