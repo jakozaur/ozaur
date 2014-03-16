@@ -208,7 +208,9 @@ def mailgun_notification():
 
   return "OK"
 
-@app.route("/notify/coinbase", methods=["POST"])
+# The obfuscated endpoint is just to not let amateur hackers pollute our security logs.
+# We still check every transaction with Coinbase...
+@app.route("/notify/coinbase/7cc941e5c7e26026f3a3de1ad28927cb", methods=["POST"])
 def coinbase_notification():
   app.logger.info("Coinbase notify %s" % (request.data))
   if request.json:
@@ -216,27 +218,45 @@ def coinbase_notification():
     custom_field = order["custom"]
     value_satoshi = order["total_native"]["cents"]
     coinbase_order_id = order["id"]
+    status = order["status"]
 
-    if not coinbase.verify_order_validity(coinbase_order_id, value_satoshi, custom_field):
+    if not coinbase.verify_order_validity(coinbase_order_id, value_satoshi, custom_field, status):
       return "Don't be evil!", 401
+
+    if status == "canceled":
+      app.logger.error("Order '%s' is canceled" % (coinbase_order_id))
+      bid = Bid.query.filter(Bid.coinbase_order == coinbase_order_id).first()
+      if bid:
+        db.session.delete(bid)
+        db.session.commit()
+        app.logger.info("Bid for order '%s' removed." % (coinbase_order_id))
+      else:
+        app.logger.error("Bid for order '%s' was not found!" % (coinbase_order_id))
+      return "Canceled"
 
     customs = custom_field.split(":")
     if len(customs) != 2:
-      app.logger("Invalid custom field")
+      app.logger.error("Invalid custom field '%s'" % (custom_field))
       return "Invalid custom field", 500
 
-    buyer = User.query.filter(User.id == int(customs[0])).first()
-    seller = User.query.filter(User.id == int(customs[1])).first()
+    try:
+      buyer = User.query.filter(User.id == int(customs[0])).first()
+      seller = User.query.filter(User.id == int(customs[1])).first()
+    except:
+      app.logger.error("Invalid custom field (ints) '%s'" % (custom_field))
+      return "Invalid custom field", 500
+
+    if not buyer or not seller:
+      app.logger.error("One of the users with id %d or %d doesn't exists" % (int(customs[0]), int(customs[1])))
+      return "Invalid custom field", 500
 
     trader.bid(buyer, seller, value_satoshi, coinbase_order_id)
 
+    return "OK"
   else:
-    pass
-    # TODO: Log that
-  # TODO: check if it is coinbase
+    app.logger.error("Request from coinbase is not a json.")
+    return "Invalid request format", 400
 
-
-  return "OK"
 
 if __name__ == "__main__":
     print "Gosia, our site is running!"

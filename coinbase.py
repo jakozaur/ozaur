@@ -30,6 +30,7 @@ class Coinbase(object):
           "price_string": price_string,
           "price_currency_iso": "BTC",
           "custom": "%d:%d" % (buyer.id, seller.id),
+          "custom_secure": True,
           "callback_url": urls["callback"],
           "cancel_url": urls["cancel"],
           "description": u"You need to pay %d μBTC to place a bid. After your bid will be accepted, you could send message to '%s'. '%s' promise to spent at least 5 minutes and reply to you." % (value_micro, seller.display_name, seller.display_name),
@@ -65,7 +66,7 @@ class Coinbase(object):
 
     return "https://coinbase.com/checkouts/%s" % (response["button"]["code"])
 
-  def verify_order_validity(self, coinbase_order_id, value_satoshi, custom_field):
+  def verify_order_validity(self, coinbase_order_id, value_satoshi, custom_field, status):
     url = "https://coinbase.com/api/v1/orders/%s" % (coinbase_order_id)
 
     nounce = str(int(time.time() * 1e6))
@@ -100,7 +101,11 @@ class Coinbase(object):
       return False
 
     if order["custom"] != custom_field:
-      app.logger.error("Custom field mismatches, someone miht be evil! Expected: %s, got '%s'", custom_field, r.text)
+      app.logger.error("Custom field mismatches, someone might be evil! Expected: %s, got '%s'" % (custom_field, r.text))
+      return False
+
+    if order["status"] != status:
+      app.logger.error("Status mismatches, someone might be evil!, Expected: %s, got '%s'" % (custom_field, r.text))
       return False
 
     app.logger.info("Verified '%s' transaction successfully. Verify: '%s'" % (custom_field, r.text))
