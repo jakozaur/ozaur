@@ -227,7 +227,24 @@ Hash: %(hash)s (please don't remove it)""" % args):
       db.session.rollback()
 
   def send_result_email(self, transaction, answer):
-    pass # TODO: implement
+    args = {"buyer": transaction.buyer.display_name,
+        "seller": transaction.seller.display_name,
+        "answer": answer }
+
+    if self._send_email(transaction.buyer, "You got an answer from '%s'" % (transaction.seller.display_name), """
+Hi %(buyer)s,
+
+'%(seller)s' answered your question: '''
+%(answer)s
+'''
+
+Thanks for tipping him with bitcoins.
+
+Thanks for buying the attention with us,
+Ozaur""" % args):
+      db.session.commit()
+    else:
+      db.session.rollback()
 
 
 process_incoming_email = Responder(Sender()).process_email
