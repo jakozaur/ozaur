@@ -56,6 +56,3 @@ class Trader(object):
     db.session.commit()
 
     self.sender.send_result_email(transaction, answer)
-
-
-trader = Trader(Sender())

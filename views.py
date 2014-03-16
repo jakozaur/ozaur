@@ -10,8 +10,12 @@ import requests
 import config
 from database import db, User, Profile, Bid, Payout
 from main import app
-from ozaur.email import Sender, process_incoming_email
-from ozaur.trader import trader
+from ozaur.email import Sender, Responder
+from ozaur.trader import Trader
+
+_sender = Sender()
+trader = Trader(_sender)
+process_incoming_email = Responder(_sender, trader).process_email
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -197,6 +201,6 @@ def mailgun_notification():
   return "OK"
 
 if __name__ == "__main__":
-    print "Gosia our site is running!"
+    print "Gosia, our site is running!"
     app.run(debug=config.APP_DEBUG)
 

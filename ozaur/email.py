@@ -8,8 +8,9 @@ from hasher import random_email_hash
 
 
 class Responder(object):
-  def __init__(self, sender):
+  def __init__(self, sender, trader):
     self.sender = sender
+    self.trader = trader
 
   def process_email(self, recipient, body, response):
     address_hash = recipient.split("@")[0]
@@ -78,7 +79,6 @@ class Responder(object):
       db.session.delete(matched_email)
       db.session.add(archive)
       db.session.commit()
-
 
 
 class Sender(object):
@@ -246,8 +246,6 @@ Ozaur""" % args):
     else:
       db.session.rollback()
 
-
-process_incoming_email = Responder(Sender()).process_email
 
 
 
