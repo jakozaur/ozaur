@@ -410,5 +410,15 @@ a:hover {
     margin-bottom: 20px;
 }
 
+.account-part a:hover {
+    text-decoration: underline;
+}
+
+.account-part a span:hover {
+    font-weight: 800;
+}
+
+
+
 
 
