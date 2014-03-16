@@ -1,4 +1,4 @@
-from database import db, Bid
+from database import db, Bid, Payout
 from email import Sender
 
 class Trader(object):
@@ -41,6 +41,21 @@ class Trader(object):
     self.sender.send_answer_email(transaction, question)
 
   def question_answered(self, seller_user, transaction, answer):
-    pass
+    if seller_user.id != transaction.seller_user_id:
+      raise Exception("Invalid user tries to answer the question")
+
+    if transaction.status != "wait_for_answer":
+      raise Exception("Question was already answered")
+
+    transaction.status = "success"
+    payout = Payout(user_id = transaction.seller_user_id,
+        value_satoshi = transaction.value_satoshi)
+    transaction.payouts.append(payout)
+    db.session.add(transaction)
+    db.session.add(payout)
+    db.session.commit()
+
+    self.sender.send_result_email(transaction, answer)
+
 
 trader = Trader(Sender())

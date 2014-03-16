@@ -106,7 +106,7 @@ class Payout(db.Model, ValueMixin, TimeMixin):
   transaction_id = Column(Integer, ForeignKey("transaction.id"), nullable=False)
   user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
   paid_date = Column(DateTime)
-  is_paid = Column(Boolean, nullable=False, default=True)
+  is_paid = Column(Boolean, nullable=False, default=False)
 
   user = relationship("User", backref="payouts")
   transaction = relationship("Transaction", backref="payouts")
