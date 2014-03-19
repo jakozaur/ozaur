@@ -136,6 +136,8 @@ def create_account():
       headers={"oauth_token": linkedin_oauth_token,
         "x-li-format": "json"})
 
+  app.logger.info("Creating an account LinkedIn response: %s" % (r.text))
+
   user_json = r.json()["values"][0]
 
   user = User(email = user_json["emailAddress"],
