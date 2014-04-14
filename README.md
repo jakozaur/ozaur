@@ -1,6 +1,13 @@
 ozaur
 =====
 
+Bitcoin marketplace, where you can trade email attention.
+
+Fun side project Jacek and Malgorzata did some time ago. Did not get any serious traction, so we shut it down.
+
+Fully functional, but no longer in development.
+
+
 # Setup
 
 ## Development environment
