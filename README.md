@@ -7,6 +7,8 @@ Fun side project Jacek and Malgorzata did some time ago. Did not get any serious
 
 Fully functional, but no longer in development.
 
+![Screenshoot](https://raw.githubusercontent.com/jakozaur/ozaur/images/screenshoot.png)
+
 
 # Setup
 
@@ -26,7 +28,7 @@ Fully functional, but no longer in development.
 ```
 
 4. Install postgresapp
-5. Launch postgresapp (Postgres93)
+5. Launch postgresapp (Postgres93 http://postgresapp.com/)
 6. Open psql and type: CREATE DATABASE ozaur;
 
 ## Setup staging environment
@@ -49,13 +51,6 @@ Fully functional, but no longer in development.
 2. Launch postgresapp (Postgres93)
 3. python database.py create
 
-
-# Usual workflow
-
-## Get the code
-
-git pull --rebase
-
 # How to run website locally
 
 python views.py
@@ -67,19 +62,6 @@ python views.py
 3. Reimport LinkedIn.
 4. Active transactions.
 5. Link to profile in ask question email.
-
-# Security TODO
-
-# Milestones
-
-1. 2014-03-16 1:11 AM PST (first full transaction)
-
-# Before open sourcing
-
-1. Parametrize obfuscation of endpoints
-
-# Useful tools
-http://postgresapp.com/
 
 Authors: Jacek Migdal, Gosia Migdal
 
